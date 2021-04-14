@@ -1,0 +1,6 @@
+/media
+__pycache__
+.vscode/
+Pipfile
+Pipfile.lock
+
