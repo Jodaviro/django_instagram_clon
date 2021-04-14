@@ -18,8 +18,10 @@
 <!--    Username and password input-->
     <div class="form-group col-sm-8 mx-auto">
         <input class="form-control"  type="text" placeholder="Username" name="username" >
-        <input class="form-control"  type="password" placeholder="Password" name="password">
+    </div>
 
+    <div class="form-group col-sm-8 mx-auto mt-1">
+        <input class="form-control"  type="password" placeholder="Password" name="password">
     </div>
 
 <!--    Login button-->
@@ -29,8 +31,7 @@
     </form>
 <!--New account registration-->
 <div class="fw-lighter text-center mt-5">
-    <p class="fw-lighter text-center"> Don't you have an account? </p> <a class="fw-lighter text-center" href="#">Register</a>
-
+    <p class="fw-lighter text-center"> Don't have an account? </p> <a class="fw-lighter text-center" href="{% url 'signup' %}">Register</a>
 </div>
 
 {% endblock %}
