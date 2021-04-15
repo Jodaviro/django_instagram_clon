@@ -46,19 +46,20 @@ def signup_view(request):
 
 
             #username validation
+            # Search if the username already exist in the database
             db_username = User.objects.filter(username=username)
             if db_username :
                 error = 'Username already registered'
                 return render(request, 'users/signup.html', {'error': error})
 
             #email validation
+            # defaul value for empty email field is '', so we need to filter default value
             if email !='' :
+                # Search if the email already exist in the database
                 db_email = User.objects.filter(email=email)
                 if db_email :
                     error = 'Email already registered with other username'
                     return render(request, 'users/signup.html', {'error': error})
-
-
 
             #User creation
             user = User.objects.create_user(
@@ -67,6 +68,7 @@ def signup_view(request):
                 email=email,
                 first_name=first_name
             )
+            #Profile creation
             profile = Profile(user=user)
             profile.save()
             return login_view(request)
@@ -75,10 +77,9 @@ def signup_view(request):
             error = "Password fields didn't match"
             return render(request,'users/signup.html', { 'error': error})
 
-    ctx = {
-        'error_1': "Password fields didn't match",
-        'error_2': 'User already registered',
-        'error_3': 'Invalid password'
-    }
     return render(request,'users/signup.html')
 
+
+def update_profile(request):
+    pass
+    return render(request, 'users/update_profile.html')
