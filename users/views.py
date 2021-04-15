@@ -1,12 +1,15 @@
 """USERS VIEWS"""
 #django
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.models import User
 
 #models
 from .models import Profile
+
+#forms
+from .forms import ProfileForm
 # Create your views here.
 
 
@@ -79,7 +82,29 @@ def signup_view(request):
 
     return render(request,'users/signup.html')
 
-
+@login_required
 def update_profile(request):
-    pass
-    return render(request, 'users/update_profile.html')
+
+
+    profile = request.user.profile
+    user = request.user
+    form = ProfileForm(instance=profile)
+
+
+    if request.method == 'POST':
+        instance = get_object_or_404(Profile, pk=request.user.pk)
+        form = ProfileForm(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            form.save()
+        redirect('update_profile')
+
+    return render(
+        request = request,
+        template_name= 'users/update_profile.html',
+        context = {'form': form,
+                   'user': user,
+                   'profile': profile,
+
+        }
+
+    )
