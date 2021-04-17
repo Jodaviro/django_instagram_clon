@@ -7,25 +7,69 @@ from django.contrib.auth.models import User
 
 #models
 from .models import Profile
+from posts.models import Post
 
 #forms
 from .forms import ProfileForm
-# Create your views here.
+from posts.forms import PostForm
 
+
+# Views
+
+@login_required
+def update_profile(request):
+    """Profile view"""
+
+    profile = request.user.profile
+
+    #makes a query in the database.
+    instance = get_object_or_404(Profile, pk=profile.pk)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=instance)
+
+        if form.is_valid():
+            form.save()
+
+            # i had to add this lines
+            #because profile object lives somewhere else
+            #out of our database. :(
+            data = form.cleaned_data
+            profile.website = data['website']
+            profile.phone_number = data['phone_number']
+            profile.biography = data['biography']
+            profile.picture = data['picture']
+            profile.save()
+
+        redirect('update_profile')
+    else:
+        form = ProfileForm(instance=instance)
+
+
+    return render(
+        request = request,
+        template_name= 'users/update_profile.html',
+        context = {'form': form,
+                   'user': request.user,
+                   'profile': profile,
+        }
+    )
 
 
 def login_view(request):
     """login view"""
-
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('feed')
-        else:
-            return render(request, 'users/login.html', {'error': 'invalid username or password'})
+    if request.user.is_anonymous:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('feed')
+            else:
+                return render(request, 'users/login.html', {'error': 'invalid username or password'})
+    else:
+        return redirect('feed')
     return render(request, 'users/login.html')
 
 @login_required
@@ -82,29 +126,6 @@ def signup_view(request):
 
     return render(request,'users/signup.html')
 
-@login_required
-def update_profile(request):
 
 
-    profile = request.user.profile
-    user = request.user
-    form = ProfileForm(instance=profile)
 
-
-    if request.method == 'POST':
-        instance = get_object_or_404(Profile, pk=request.user.pk)
-        form = ProfileForm(request.POST, request.FILES, instance=instance)
-        if form.is_valid():
-            form.save()
-        redirect('update_profile')
-
-    return render(
-        request = request,
-        template_name= 'users/update_profile.html',
-        context = {'form': form,
-                   'user': user,
-                   'profile': profile,
-
-        }
-
-    )

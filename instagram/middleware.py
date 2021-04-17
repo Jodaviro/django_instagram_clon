@@ -21,7 +21,7 @@ class ProfileUpdateMiddleware:
 
                     return redirect('update_profile')
 
-            response = self.get_response(request)
+        response = self.get_response(request)
 
         # Code to be executed for each request/response after
         # the view is called.
