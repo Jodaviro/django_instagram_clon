@@ -59,10 +59,12 @@ def update_profile(request):
 def login_view(request):
     """login view"""
     if request.user.is_anonymous:
+
         if request.method == 'POST':
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(request, username=username, password=password)
+
             if user is not None:
                 login(request, user)
                 return redirect('feed')
@@ -71,6 +73,7 @@ def login_view(request):
     else:
         return redirect('feed')
     return render(request, 'users/login.html')
+
 
 @login_required
 def logout_view (request):

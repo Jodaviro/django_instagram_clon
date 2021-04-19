@@ -25,10 +25,7 @@
                     <div class="media-body">
                         <h5 class="ml-4">@{{ user.username }} | {{ user.get_full_name }}</h5>
                         <p class="ml-4">
-                            <input
-                                type="file"
-                                name="picture"
-                            >
+                            {{form.picture}}
                         </p>
                     </div>
                 </div>
@@ -79,7 +76,7 @@
                     <label>Phone number</label>
                     <input
                         class="form-control {% if form.phone_number.errors %} is-invalid {% endif %}"
-                        type="text"
+                        type="number"
                         name="phone_number"
                         placeholder="Phone number"
                         value="{% if form.errors %}{{ form.phone_number.value }}{% else %}{{ profile.phone_number }} {% endif %}"

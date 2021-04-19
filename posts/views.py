@@ -14,7 +14,7 @@ from posts.models import Post
 # Create your views here.
 
 
-posts = [
+postecitos = [
     {
         'title': 'Mont Blanc',
         'user': {
@@ -46,21 +46,49 @@ posts = [
 
 @login_required
 def list_posts(request):
+    posts = Post.objects.all().order_by('created')
 
-    # instance = get_object_or_404(Post, pk=request.user.post.pk)
-    # post = request.user.post
-    #
-    # if request.method == 'POST':
-    #     form = PostForm(request.POST, request.FILES, instance=instance)
-    #
-    #     if form.is_valid():
-    #         form.save()
-    #         data = form.cleaned_data
-    #
-    #
-    # else:
-    #     form = PostForm(request.user.post )
 
-    return render(request,'posts/feed.html', {'posts': posts})
+    return render(request= request,
+                  template_name='posts/feed.html',
+                  context={'posts': posts,
+                           'profile': request.user.profile,
+                           # 'user': request.user
+
+                    })
+
+
+@login_required()
+def create_post(request):
+
+    user= request.user
+    profile = request.user.profile
+
+    if request.method == 'POST':
+        form = PostForm( request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect('feed')
+        else:
+            print('error')
+
+    else:
+
+        form = PostForm(initial={
+            'user' : user,
+            'profile': profile,
+        })
+
+    return render(
+        request=request,
+        template_name= 'posts/new.html',
+        context={ 'form': form,
+                  'user': user,
+                  'profile': profile,
+        }
+    )
+
+
 
 
