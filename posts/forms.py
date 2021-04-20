@@ -12,6 +12,7 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = ['user', 'profile', 'title', 'photo',]
+        exclude=['user', 'profile']
         widgets = {'photo': FileInput(attrs={'class': 'form-control'}),
             'user': NumberInput(attrs={
                 'type': 'hidden',
@@ -26,3 +27,4 @@ class PostForm(ModelForm):
                 # 'disabled': True,
             }),
          }
+

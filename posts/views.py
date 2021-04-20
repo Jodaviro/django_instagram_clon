@@ -46,7 +46,7 @@ postecitos = [
 
 @login_required
 def list_posts(request):
-    posts = Post.objects.all().order_by('created')
+    posts = Post.objects.all().order_by('-created')
 
 
     return render(request= request,
@@ -65,7 +65,8 @@ def create_post(request):
     profile = request.user.profile
 
     if request.method == 'POST':
-        form = PostForm( request.POST, request.FILES)
+        instance = Post(user=user, profile=profile)
+        form = PostForm( request.POST, request.FILES, instance=instance)
 
         if form.is_valid():
             form.save()
@@ -75,10 +76,7 @@ def create_post(request):
 
     else:
 
-        form = PostForm(initial={
-            'user' : user,
-            'profile': profile,
-        })
+        form = PostForm()
 
     return render(
         request=request,

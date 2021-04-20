@@ -1,0 +1,27 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block 'head_content %}
+    <title>Test</title>
+{% endblock %}
+
+{%  block container %}
+<div class="form-group col-sm-8 mx-auto">
+
+{% if form.errors %}
+    <div class="alert alert-danger col-sm-10 mx-auto" role="alert" >
+        {{ form.error }} {{ form.non_field_errors }}
+    </div>
+{% endif %}
+
+
+    <form  method="POST" action="{% url 'test' %}" enctype="multipart/form-data" >
+        {% csrf_token %}
+
+        {{ form }}
+
+        <div class="d-grid gap-2 col-6 mx-auto" >
+            <button class="btn btn-primary btn-block mt-3" type="submit" > Send</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

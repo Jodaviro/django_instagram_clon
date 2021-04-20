@@ -12,6 +12,7 @@ from posts.models import Post
 #forms
 from .forms import ProfileForm
 from posts.forms import PostForm
+from users.forms import SignUpForm
 
 
 # Views
@@ -19,39 +20,27 @@ from posts.forms import PostForm
 @login_required
 def update_profile(request):
     """Profile view"""
-
     profile = request.user.profile
-
     #makes a query in the database.
     instance = get_object_or_404(Profile, pk=profile.pk)
 
     if request.method == 'POST':
+
         form = ProfileForm(request.POST, request.FILES, instance=instance)
 
         if form.is_valid():
             form.save()
 
-            # i had to add this lines
-            #because profile object lives somewhere else
-            #out of our database. :(
-            data = form.cleaned_data
-            profile.website = data['website']
-            profile.phone_number = data['phone_number']
-            profile.biography = data['biography']
-            profile.picture = data['picture']
-            profile.save()
-
-        redirect('update_profile')
+        return redirect('update_profile')
     else:
         form = ProfileForm(instance=instance)
-
 
     return render(
         request = request,
         template_name= 'users/update_profile.html',
         context = {'form': form,
                    'user': request.user,
-                   'profile': profile,
+                   'profile': profile
         }
     )
 
@@ -84,6 +73,7 @@ def logout_view (request):
 
 def signup_view(request):
     """Sign up view"""
+    form = SignUpForm
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -93,7 +83,6 @@ def signup_view(request):
 
         #password validation
         if password == password_confirm:
-
 
             #username validation
             # Search if the username already exist in the database
@@ -105,7 +94,7 @@ def signup_view(request):
             #email validation
             # defaul value for empty email field is '', so we need to filter default value
             if email !='' :
-                # Search if the email already exist in the database
+                # Check if  email already exist in the database
                 db_email = User.objects.filter(email=email)
                 if db_email :
                     error = 'Email already registered with other username'
@@ -119,7 +108,7 @@ def signup_view(request):
                 first_name=first_name
             )
             #Profile creation
-            profile = Profile(user=user)
+            profile = Profile(user=user, website='', biography ='', phone_number= '')
             profile.save()
             return login_view(request)
 
@@ -127,7 +116,7 @@ def signup_view(request):
             error = "Password fields didn't match"
             return render(request,'users/signup.html', { 'error': error})
 
-    return render(request,'users/signup.html')
+    return render(request,'users/signup.html', {'form' : form })
 
 
 

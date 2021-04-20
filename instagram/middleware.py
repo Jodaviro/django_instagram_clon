@@ -15,8 +15,8 @@ class ProfileUpdateMiddleware:
         if not request.user.is_anonymous:
             profile = request.user.profile
 
-            if not profile.picture or not  profile.biography :
-                if request.path not in [reverse('update_profile'), reverse('logout'), request.path.startswith('/admin/')]\
+            if not profile.picture and not  profile.biography :
+                if request.path not in [reverse('update_profile'), reverse('logout'), reverse('test')]\
                         and not request.path.startswith('/admin/'):
 
                     return redirect('update_profile')

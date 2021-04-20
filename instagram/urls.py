@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', local_views.hola_mundo, name='hello'),
     path('bye/<int:age>/<str:name>', local_views.say_bye, name='bye'),
+    path('test/', local_views.test, name='test'),
 
     # posts views
     path('', posts_views.list_posts, name='feed'),
