@@ -14,7 +14,7 @@
 {% endif %}
 
 
-<form  method="POST" action="{% url 'login' %}" >
+<form  method="POST" action="{% url 'users:login' %}" >
     {% csrf_token %}
 
 <!--Username and password input-->
@@ -33,7 +33,7 @@
     </form>
 <!--New account registration-->
 <div class="fw-lighter text-center mt-5">
-    <p class="fw-lighter text-center"> Don't have an account? </p> <a class="fw-lighter text-center" href="{% url 'signup' %}">Register</a>
+    <p class="fw-lighter text-center"> Don't have an account? </p> <a class="fw-lighter text-center" href="{% url 'users:signup' %}">Register</a>
 </div>
 
 {% endblock %}

@@ -70,7 +70,7 @@ def create_post(request):
 
         if form.is_valid():
             form.save()
-            return redirect('feed')
+            return redirect('posts:feed')
         else:
             print('error')
 

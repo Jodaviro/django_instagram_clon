@@ -16,10 +16,10 @@ class ProfileUpdateMiddleware:
             profile = request.user.profile
 
             if not profile.picture and not  profile.biography :
-                if request.path not in [reverse('update_profile'), reverse('logout'), reverse('test')]\
+                if request.path not in [reverse('users:update_profile'), reverse('users:logout'), reverse('test')]\
                         and not request.path.startswith('/admin/'):
 
-                    return redirect('update_profile')
+                    return redirect('users:update_profile')
 
         response = self.get_response(request)
 

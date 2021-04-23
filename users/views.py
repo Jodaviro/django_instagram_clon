@@ -4,10 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.models import User
+from django.views.generic import DetailView
+from django.urls import reverse
 
 #models
 from .models import Profile
 from posts.models import Post
+from users.models import User
 
 #forms
 from .forms import ProfileForm
@@ -16,6 +19,20 @@ from users.forms import SignUpForm
 
 
 # Views
+
+class UserDetailView(DetailView):
+    """Class view for user detail"""
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    template_name='users/detail.html'
+    queryset = User.objects.all()
+    context_object_name = 'user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        context['posts'] = Post.objects.filter(user=user).order_by('-created')
+        return context
 
 @login_required
 def update_profile(request):
@@ -31,7 +48,8 @@ def update_profile(request):
         if form.is_valid():
             form.save()
 
-        return redirect('update_profile')
+        url= reverse('users:detail', kwargs={'username': request.user.username})
+        return redirect(url)
     else:
         form = ProfileForm(instance=instance)
 
@@ -56,11 +74,11 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('feed')
+                return redirect('posts:feed')
             else:
                 return render(request, 'users/login.html', {'error': 'invalid username or password'})
     else:
-        return redirect('feed')
+        return redirect('posts:feed')
     return render(request, 'users/login.html')
 
 
@@ -73,50 +91,15 @@ def logout_view (request):
 
 def signup_view(request):
     """Sign up view"""
-    form = SignUpForm
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        password_confirm = request.POST['password_confirm']
-        email = request.POST['email']
-        first_name = request.POST['first_name']
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return login_view(request)
 
-        #password validation
-        if password == password_confirm:
-
-            #username validation
-            # Search if the username already exist in the database
-            db_username = User.objects.filter(username=username)
-            if db_username :
-                error = 'Username already registered'
-                return render(request, 'users/signup.html', {'error': error})
-
-            #email validation
-            # defaul value for empty email field is '', so we need to filter default value
-            if email !='' :
-                # Check if  email already exist in the database
-                db_email = User.objects.filter(email=email)
-                if db_email :
-                    error = 'Email already registered with other username'
-                    return render(request, 'users/signup.html', {'error': error})
-
-            #User creation
-            user = User.objects.create_user(
-                username=username,
-                password=password,
-                email=email,
-                first_name=first_name
-            )
-            #Profile creation
-            profile = Profile(user=user, website='', biography ='', phone_number= '')
-            profile.save()
-            return login_view(request)
-
-        else:
-            error = "Password fields didn't match"
-            return render(request,'users/signup.html', { 'error': error})
-
-    return render(request,'users/signup.html', {'form' : form })
+    else:
+        form = SignUpForm
+        return render(request,'users/signup.html', {'form' : form })
 
 
 

@@ -19,7 +19,7 @@
     </div>
 {% endif %}
 
-<form  method="POST" action="{% url 'signup' %}" >
+<form  method="POST" action="{% url 'users:signup' %}" >
     {% csrf_token %}
 
 <!--Username password and others inputs for registration-->
@@ -53,7 +53,8 @@
 <!--Back to login link-->
 
 <div class="fw-lighter text-center mt-5">
-    <p class="fw-lighter text-center"> Do you have an account already? </p> <a class="fw-lighter text-center" href="{% url 'login' %}">Login</a>
+    <p class="fw-lighter text-center"> Do you have an account already? </p>
+    <a class="fw-lighter text-center" href="{% url 'users:login' %}">Login</a>
 </div>
 
 {% endblock%}

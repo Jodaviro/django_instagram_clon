@@ -3,7 +3,10 @@
     <div class="container">
 
 <!--        Logo-->
-        <a class="x" style="border-right: 1px solid #efefef;" href="{% url 'feed' %}">
+        <a
+            class="x" style="border-right: 1px solid #efefef;"
+            href="{% url 'posts:feed' %}"
+        >
             <img src="{% static 'img/instagram.png' %}" height="45" class="d-inline-block align-top"/>
         </a>
 
@@ -13,33 +16,42 @@
 
 <!--            Logout button-->
                 <li class="nav-item nav-icon ">
-                    <a href="{% url 'logout' %}">
+                    <a href="{% url 'users:logout' %}">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 </li>
 
 <!--            New post button-->
                 <li class="nav-item nav-icon">
-                    <a href="{% url 'create_post' %}">
+                    <a href="{% url 'posts:create_post' %}">
                         <i class="fas fa-plus"></i>
                     </a>
                 </li>
 
 <!--            Profile button-->
                 <li class="nav-item nav-icon dropdown">
-                    <a class="nav-item dropdown" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a
+                        class="nav-item dropdown" href="" id="navbarDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                    >
                         {% if profile.picture %}
-                        <img src="{{ profile.picture.url }}" height="35" class="d-inline-block align-top rounded-circle "/>
+                        <img
+                            class="d-inline-block align-top rounded-circle"
+                            src="{{ profile.picture.url }}" height="35"
+                        />
                         {% else %}
-                        <img src="{% static 'img/default-profile.png' %}" height="35" class="d-inline-block align-top rounded-circle "/>
+                        <img
+                            class="d-inline-block align-top rounded-circle"
+                            src="{% static 'img/default-profile.png' %}" height="35"
+                        />
                         {% endif %}
                     </a>
 
 <!--                Dropdow profile menu-->
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:detail' username=request.user.username %}">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'update_profile' %}">Config</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:update_profile' %}">Config</a></li>
                     </ul>
                 </li>
 
