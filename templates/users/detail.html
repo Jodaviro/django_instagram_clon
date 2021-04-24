@@ -71,7 +71,7 @@
 <!--        List username posts-->
             {% for post in posts %}
             <div class="col-sm-4 pt-5 pb-5 pr-5 pl-5 d-flex justify-content-center align-items-center">
-                <a href="" class="border">
+                <a href="{% url 'posts:detail' id=post.id %}" class="border">
                     <img src="{{ post.photo.url }}" alt="{{ post.title }}" class="img-fluid"/>
                 </a>
             </div>
@@ -79,3 +79,4 @@
         </div>
     </div>
   {% endblock %}
+

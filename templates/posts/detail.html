@@ -1,14 +1,11 @@
-{% extends "base.html" %}
-{% load static %}
-
+{% extends 'base.html' %}
+{% load static%}
 {% block head_content %}
-    <title>Instagram Feed</title>
+    <title>Post Detail</title>
 {% endblock %}
 
-{% block container %}
-    <div class="row">
-        {% for post in posts %}
-        <div class="col-lg-4 offset-lg-4">
+{% block container%}
+<div class="col-lg-4 offset-lg-4 ">
         <!--profile user picture-->
             <div class="media">
                 {% if post.profile.picture %}
@@ -35,15 +32,11 @@
                 </div>
             </div>
 <!--        list posts-->
-            <a href="{% url 'posts:detail' id=post.id %}">
             <img
                  class="img-fluid mt-3 border rounded"
                  src="{{ post.photo.url }}" alt="{{ post.title }}"
             >
-            </a>
             <h6 class="ml-1 mt-1">{{ post.title }}</h6>
             <p class="fw-lighter fst-italic small"> {{ post.created }} </p>
         </div>
-        {% endfor %}
-    </div>
 {% endblock %}

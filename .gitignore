@@ -5,4 +5,5 @@ Pipfile
 Pipfile.lock
 .idea/
 .triggers
+.DS_Store
 

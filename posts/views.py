@@ -2,6 +2,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 #Utils
 from datetime import datetime
@@ -11,51 +13,40 @@ from posts.forms import PostForm
 
 #models
 from posts.models import Post
+from users.models import User
+from users.models import Profile
 # Create your views here.
 
 
-postecitos = [
-    {
-        'title': 'Mont Blanc',
-        'user': {
-            'name': 'Yésica Cortés',
-            'picture': 'https://picsum.photos/60/60/?image=1027'
-        },
-        'timestamp': datetime.now().strftime('%b %dth, %Y - %H:%M hrs'),
-        'photo': 'https://picsum.photos/800/600?image=1036',
-    },
-    {
-        'title': 'Via Láctea',
-        'user': {
-            'name': 'Christian Van der Henst',
-            'picture': 'https://picsum.photos/60/60/?image=1005'
-        },
-        'timestamp': datetime.now().strftime('%b %dth, %Y - %H:%M hrs'),
-        'photo': 'https://picsum.photos/800/800/?image=903',
-    },
-    {
-        'title': 'Nuevo auditorio',
-        'user': {
-            'name': 'Uriel (thespianartist)',
-            'picture': 'https://picsum.photos/60/60/?image=883'
-        },
-        'timestamp': datetime.now().strftime('%b %dth, %Y - %H:%M hrs'),
-        'photo': 'https://picsum.photos/500/700/?image=1076',
-    },
-]
-
-@login_required
-def list_posts(request):
-    posts = Post.objects.all().order_by('-created')
+class PostDetailView(DetailView, LoginRequiredMixin):
+    model = Post
+    context_object_name = 'post'
+    template_name = 'posts/detail.html'
+    slug_field = 'id'
+    slug_url_kwarg = 'id'
 
 
-    return render(request= request,
-                  template_name='posts/feed.html',
-                  context={'posts': posts,
-                           'profile': request.user.profile,
-                           # 'user': request.user
 
-                    })
+class PostsFeedView(LoginRequiredMixin, ListView):
+
+    ordering = ('-created')
+    context_object_name = 'posts'
+    template_name = 'posts/feed.html'
+    paginate_by = 100
+    model = Post
+
+
+# @login_required
+# def list_posts(request):
+#     posts = Post.objects.all().order_by('-created')
+#
+#
+#     return render(request= request,
+#                   template_name='posts/feed.html',
+#                   context={'posts': posts,
+#                            'profile': request.user.profile,
+#                            # 'user': request.user
+#                     })
 
 
 @login_required()
