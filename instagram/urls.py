@@ -25,9 +25,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     # local views
     path('admin/', admin.site.urls),
-path(r'', include('django.contrib.auth.urls')),
-    path('hello/', local_views.hola_mundo, name='hello'),
-    path('bye/<int:age>/<str:name>', local_views.say_bye, name='bye'),
+    path(r'', include('django.contrib.auth.urls')),
     path('test/', local_views.test, name='test'),
 
 

@@ -28,6 +28,8 @@ class ProfileForm(forms.ModelForm):
             'placeholder': '(optional)'
             }),
             'biography': Textarea(attrs={
+            'cols':4,
+            'rows': 4,
             'class': 'form-control',
             'placeholder': 'You must provide a small biography, or a profile picture.'
             }),
@@ -41,7 +43,7 @@ class ProfileForm(forms.ModelForm):
 
 
         if not picture and not biography:
-            raise ValidationError('You must provide a profile picture or a biography text.')
+            raise ValidationError('You must provide a profile picture or a biography text to proceeed.')
 
 
 #Signup
@@ -107,6 +109,7 @@ class SignUpForm (forms.Form):
         data.pop('password_confirm')
 
         user = User.objects.create_user(**data)
+        #Also creates a Profile
         profile = Profile(user=user)
         profile.save()
 

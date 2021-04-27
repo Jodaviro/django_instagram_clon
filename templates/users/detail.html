@@ -6,7 +6,7 @@
 
 {% block container %}
 
-
+{# style tag need to be fixed and placed to it's proper file #}
 <div class="container mb-5" style="margin-top: 8em;">
         <div class="row">
             <!--profile picture username    -->
@@ -71,7 +71,7 @@
 <!--        List username posts-->
             {% for post in posts %}
             <div class="col-sm-4 pt-5 pb-5 pr-5 pl-5 d-flex justify-content-center align-items-center">
-                <a href="{% url 'posts:detail' id=post.id %}" class="border">
+                <a href="{% url 'posts:detail' pk=post.pk %}" class="border">
                     <img src="{{ post.photo.url }}" alt="{{ post.title }}" class="img-fluid"/>
                 </a>
             </div>

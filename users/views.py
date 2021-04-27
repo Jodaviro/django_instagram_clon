@@ -2,10 +2,11 @@
 #django
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import authenticate,login, logout
-from django.contrib.auth.models import User
 from django.views.generic import DetailView
+from django.views.generic.edit import UpdateView
+from django.contrib.auth import views as auth
 
 
 #models
@@ -19,6 +20,19 @@ from posts.forms import PostForm
 from users.forms import SignUpForm
 
 # Views
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    """Profile update view"""
+    model = Profile
+    form_class = ProfileForm
+    template_name = 'users/update_profile.html'
+
+    def get_object(self, queryset=None):
+        """ Return user's profile """
+        return self.request.user.profile
+
+    def get_success_url(self):
+        username = self.object.user.username
+        return reverse('users:detail', kwargs={'username': username})
 
 
 class UserDetailView(DetailView, LoginRequiredMixin):
@@ -31,40 +45,22 @@ class UserDetailView(DetailView, LoginRequiredMixin):
 
 
     def get_context_data(self, **kwargs):
+        """Gets the user profile and its posts"""
         context = super().get_context_data(**kwargs)
         user = self.get_object()
         context['posts'] = Post.objects.filter(user=user).order_by('-created')
         return context
 
 
-
-@login_required
-def update_profile(request):
-    """Profile view"""
-    profile = request.user.profile
-    #makes a query in the database.
-    instance = get_object_or_404(Profile, pk=profile.pk)
-
-    if request.method == 'POST':
-
-        form = ProfileForm(request.POST, request.FILES, instance=instance)
-
-        if form.is_valid():
-            form.save()
-
-        url= reverse('users:detail', kwargs={'username': request.user.username})
-        return redirect(url)
-    else:
-        form = ProfileForm(instance=instance)
-
-    return render(
-        request = request,
-        template_name= 'users/update_profile.html',
-        context = {'form': form,
-                   'user': request.user,
-                   'profile': profile
-        }
-    )
+# class LoginView(auth.LoginView):
+#     """
+#     Beatiful simple and abstracted loginview but
+#     i cant find the way to give the auth credentials
+#     from signupview for automatic login when registration is finished""
+#     """
+#     template_name = 'users/login.html'
+#     redirect_field_name = 'posts:feed'
+#     redirect_authenticated_user = True
 
 
 def login_view(request):
@@ -99,8 +95,10 @@ def signup_view(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-        return login_view(request)
-
+            return login_view(request)
+        else:
+            form = SignUpForm(request.POST)
+            return render(request, 'users/signup.html', {'form': form})
     else:
         form = SignUpForm
         return render(request,'users/signup.html', {'form' : form })

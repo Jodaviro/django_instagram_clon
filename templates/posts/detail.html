@@ -7,7 +7,8 @@
 {% block container%}
 <div class="col-lg-4 offset-lg-4 ">
         <!--profile user picture-->
-            <div class="media">
+            {# style tag need to be fixed, and place to its proper file #}
+            <div class="media" style="margin-top: 5em;">
                 {% if post.profile.picture %}
                 <a href="{% url 'users:detail' username=post.profile.user.username %}">
                 <img
