@@ -80,24 +80,12 @@ WSGI_APPLICATION = 'instagram.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 
-
 DATABASES = {
-
-    'default': dj_database_url.config(
-        default=config(DATABASE_URL)
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'instagram',
-#         'USER': 'postgres',
-#         'PASSWORD': 'avril0212',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
