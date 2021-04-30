@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'wjjz&-o!$a@tb3nk6px20^ez-y#1$+w_#y4+je)hs-ur&o08cu'
+
+SECRET_KEY = config('SECRET_KEY', default='wjjz&-o!$a@tb3nk6px20^ez-y#1$+w_#y4+je)hs-ur&o08cu')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -76,26 +79,25 @@ WSGI_APPLICATION = 'instagram.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-import dj_database_url
-from decouple import config
 
-# DATABASES = {
-#
-#     'default': dj_database_url.config(
-#         default=config(DATABASE_URL)
-#     )
-# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'instagram',
-        'USER': 'postgres',
-        'PASSWORD': 'avril0212',
-        'HOST': 'localhost',
-        'PORT': '5432',
 
-    }
+    'default': dj_database_url.config(
+        default=config(DATABASE_URL)
+    )
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'instagram',
+#         'USER': 'postgres',
+#         'PASSWORD': 'avril0212',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -150,3 +152,5 @@ LOGIN_REDIRECT_URL= '/'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL= '/media/'
 
+if config('DJANGO_PRODUCTION_ENV', default=False, cast=bool):
+    from .settings_production import *
