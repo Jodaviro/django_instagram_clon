@@ -31,6 +31,10 @@
         src="{{ post.photo.url }}" alt="{{ post.title }}"
      >
     </a>
-    <h6 class="ml-1 mt-1">{{ post.title }}</h6>
+    {% if post.title %}
+        <h6 class="ml-1 mt-1">{{ post.title }}</h6>
+    {% else %}
+    <p></p>
+    {% endif %}
     <p class="fw-lighter fst-italic small"> {{ post.created }} </p>
 </div>

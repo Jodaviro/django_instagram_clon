@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='wjjz&-o!$a@tb3nk6px20^ez-y#1$+w_#y4+je)hs-ur&o08cu')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -53,7 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'instagram.middleware.ProfileUpdateMiddleware'
+    'instagram.middleware.ProfileUpdateMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'instagram.urls'
@@ -124,10 +125,10 @@ USE_TZ = True
 STATIC_ROOT = BASE_DIR / 'static'
 STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = [
-#     BASE_DIR / "static",
-#     # '/var/www/static/',
-# ]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    #'/var/www/static/',
+]
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -140,8 +141,10 @@ LOGIN_REDIRECT_URL= '/'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL= '/media/'
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 if config('DJANGO_PRODUCTION_ENV', default=False, cast=bool):
     from .settings_production import *
 
-# Activate Django-Heroku.
+# Activate Django-Heroku.heroku logs --tail
 django_heroku.settings(locals())
