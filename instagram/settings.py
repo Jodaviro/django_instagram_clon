@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY', default='wjjz&-o!$a@tb3nk6px20^ez-y#1$+w_#y4+j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.herokuapp.com']
 
 # Application definition
 
@@ -127,11 +127,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-CLOUDINARY_STORAGE = {
-             'CLOUD_NAME': 'hobsuw6e7',
-             'API_KEY': '561925528734738',
-             'API_SECRET': 'XNIO7YrYhlJkIk0lnAp6NsL4wCk'
-            }
+CLOUDINARY_URL = config('CLOUDINARY_URL')
 
 DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
 
