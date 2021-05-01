@@ -4,4 +4,6 @@ __pycache__
 .idea/
 .triggers
 .DS_Store
-
+Pipfile
+Pipfile.lock
+mydatabase
