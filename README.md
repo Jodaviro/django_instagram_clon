@@ -4,7 +4,7 @@ https://instagram-clon-jodaviro.herokuapp.com/
 
 This is a beta version of an instagram clon I've made using Django, Bootstrap and Postgresql.
 
-Some features like follow, or like button still mising. They will be implemented latter. 
+Some features like edit post, comments, follow, or like button still mising. They will be implemented latter. 
 
 After signup you will have to provide a profile image or a short biograpy in order to use the app.
 
