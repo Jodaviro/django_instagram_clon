@@ -7,7 +7,7 @@ Some features like edit post, comments, follow, or like button still mising. The
 
 After signup you will have to provide a profile image or a short biograpy in order to use the app.
 
-It was deployed on heroku using the [Cloudinary API](https://elements.heroku.com/addons/cloudinary)  to store media files.
+It was deployed on heroku using the [Cloudinary API](https://elements.heroku.com/addons/cloudinary)  for media files storage.
  
 
 ![Captura de pantalla 2021-05-01 a las 19 23 15](https://user-images.githubusercontent.com/31089339/116790477-a096ba80-aab4-11eb-9eed-3ad4197b70e9.png)
