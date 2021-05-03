@@ -1,6 +1,5 @@
 # [instagram_clon](https://instagram-clon-jodaviro.herokuapp.com/)
 
-https://instagram-clon-jodaviro.herokuapp.com/
 
 This is a beta version of an instagram clon I've made using Django, Bootstrap and Postgresql.
 
