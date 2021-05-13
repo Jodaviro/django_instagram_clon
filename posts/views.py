@@ -19,7 +19,6 @@ class PostDetailView(DetailView, LoginRequiredMixin):
     context_object_name = 'post'
     template_name = 'posts/detail.html'
 
-
 class PostsFeedView(LoginRequiredMixin, ListView):
     """Views that list all posts"""
     ordering = ('-created')
@@ -44,36 +43,6 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         form.instance.profile = self.request.user.profile
         return super().form_valid(form)
 
-
-# @login_required()
-# def create_post(request):
-#
-#     user= request.user
-#     profile = request.user.profile
-#
-#     if request.method == 'POST':
-#         instance = Post(user=user, profile=profile)
-#         form = PostForm( request.POST, request.FILES, instance=instance)
-#
-#         if form.is_valid():
-#             form.save()
-#             return redirect('posts:feed')
-#         else:
-#             print('error')
-#
-#     else:
-#
-#         form = PostForm()
-#
-#     return render(
-#         request=request,
-#         template_name= 'posts/new.html',
-#         context={ 'form': form,
-#                   'user': user,
-#                   'profile': profile,
-#         }
-#     )
-#
 
 
 

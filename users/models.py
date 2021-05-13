@@ -18,13 +18,11 @@ class Profile(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
-
     # def get_absolute_url(self):
     #     return reverse('users:detail', kwargs={'username': self.user.username})
 
-
     def __str__(self):
-        return self.user.username
+        return f' @{self.user.username}'
 
 class FollowSystem(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)

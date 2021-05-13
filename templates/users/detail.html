@@ -33,7 +33,7 @@
                 <h2 style="font-weight: 100;">
                     {{ user.username }}
                     {% if user == request.user %}
-                        <a href="{% url 'users:update_profile' %}" class="ml-5 btn btn-sm btn-outline-info">
+                        <a href="{% url 'users:update_profile' %}" class="ml-5 btn btn-sm btn-outline-dark">
                             Edit profile
                         </a>
                     {% else %}

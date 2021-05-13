@@ -22,6 +22,11 @@ from instagram import views as local_views
 # for static django files
 from django.conf import settings
 from django.conf.urls.static import static
+
+
+media_path= static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+static_path = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
 urlpatterns = [
     # local views
     path('admin/', admin.site.urls),
@@ -37,6 +42,6 @@ urlpatterns = [
     path('users/', include('users.urls', namespace='users')),
 
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + media_path + static_path
 
 
