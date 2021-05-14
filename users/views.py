@@ -13,6 +13,7 @@ from django.contrib.auth import views as auth
 from .models import Profile
 from posts.models import Post
 from users.models import User
+from users.models import FollowSystem
 
 #forms
 from .forms import ProfileForm

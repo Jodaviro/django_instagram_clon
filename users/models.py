@@ -24,14 +24,23 @@ class Profile(models.Model):
     def __str__(self):
         return f' @{self.user.username}'
 
+
 class FollowSystem(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
-    follower= models.ManyToManyField(Profile, related_name='followers')
-    following= models.ManyToManyField(Profile, related_name='following')
-
+    following= models.ManyToManyField(Profile, related_name='followed_by')
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     @classmethod
     def follow(cls, profile, another_profile):
-        obj.create = cls.objects.get_or_create(profile=profile)
-        obj.follower.add(another_profile)
-        print("followed")
+        obj = cls.objects.get_or_create(profile=profile)
+        obj.following.add(another_profile)
+        return obj
+    #
+    # @classmethod
+    # def unfollow(self, profile, another_profile):
+    #     obj = self.objects.get_or_create(profile=profile)
+    #     obj.follower.delete(another_profile)
+
+    def __str__(self):
+        return f'{self.profile},{self.following}'

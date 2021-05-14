@@ -31,7 +31,6 @@ class ProfileAdmin(admin.ModelAdmin):
     readonly_fields = ('created', 'modified',)
 
 
-
 class ProfileInline(admin.StackedInline):
     """Inline admin for Users in django user panel"""
     model = Profile

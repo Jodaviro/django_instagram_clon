@@ -44,15 +44,36 @@
                 </h2>
 
                 <div class="row mt-2" style="font-size: 1.2em">
-<!--                Fake user followers, following, and posts-->
+<!--                posts count-->
+
                     <div class="col-sm-4">
-                        <b>{{ user.profile.posts_count }}785</b> posts
+                        <b>{{ posts.count }}</b> Posts
                     </div>
+
+<!--                following count-->
                     <div class="col-sm-4">
-                        <b>{{ user.profile.followers }}1,401</b> followers
+                        {% if user.profile.followsystem.following.count %}
+                            <a href="#">
+                                <b>{{ user.profile.followsystem.following.count }}</b>
+                            </a>
+                                Following
+
+                        {% else %}
+                            <b> 0 </b> Following
+                        {% endif %}
                     </div>
+<!--                followers count -->
                     <div class="col-sm-4">
-                        <b>{{ user.profile.following }}491</b> following
+                        {% if user.profile.followed_by.all.count %}
+                            <a href="#">
+                                <b>{{ user.profile.followed_by.count }}</b>
+                            </a>
+                                Followers
+
+                        {% else %}
+                            <b> 0 </b> Followers
+                            {{ user.profile.followsystem.followed_by.count }}
+                        {% endif %}
                     </div>
                 </div>
                 <div     class="row mt-4">
