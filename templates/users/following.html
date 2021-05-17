@@ -1,0 +1,18 @@
+{% extends 'users/base.html' %}
+{% load static%}
+{% block head_content %}
+    <title>Following</title>
+{% endblock %}
+
+{% block container%}
+
+ {{user.profile.contact}}
+{{user.profile.contact.following.all}}
+{% for user in user.profile.contact.following.all %}
+ {% include 'users/user_thumbnail.html' %}
+ {{contact}}
+ {{user.profile.contact.following.all}}
+
+
+{% endfor %}
+{% endblock %}

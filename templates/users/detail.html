@@ -11,9 +11,9 @@
         <div class="row">
             <!--profile picture username    -->
             <div class="col-sm-4 d-flex justify-content-center">
-                {% if user.profile.picture %}
+                {% if users.profile.picture %}
                 <img
-                    src="{{ user.profile.picture.url }}"
+                    src="{{ users.profile.picture.url }}"
                     alt="@{{ user.username}}"
                     class="rounded-circle"
                     width="150px"
@@ -31,13 +31,15 @@
             <div class="col-sm-8 ">
 <!--            Big profile name and edit or follow botton-->
                 <h2 style="font-weight: 100;">
-                    {{ user.username }}
-                    {% if user == request.user %}
+                    {{ users.username }}
+                    {% if users == request.user %}
                         <a href="{% url 'users:update_profile' %}" class="ml-5 btn btn-sm btn-outline-dark">
                             Edit profile
                         </a>
                     {% else %}
-                        <a href="" class="ml-5 btn btn-sm btn-primary">
+                        <a
+                            href="{% url 'users:followorunfollow' profile=users.profile.pk instruction='fllw'%}"
+                            class="ml-5 btn btn-sm btn-primary">
                             Follow
                         </a>
                     {% endif %}
@@ -52,11 +54,11 @@
 
 <!--                following count-->
                     <div class="col-sm-4">
-                        {% if user.profile.followsystem.following.count %}
-                            <a href="#">
-                                <b>{{ user.profile.followsystem.following.count }}</b>
+                        {% if users.profile.contact.following.count %}
+                            <a href=" {% url 'users:following' username=user.profile.user.username%}">
+                                <b>{{ users.profile.contact.following.count }}</b>
                             </a>
-                                Following
+                        Following
 
                         {% else %}
                             <b> 0 </b> Following
@@ -64,15 +66,14 @@
                     </div>
 <!--                followers count -->
                     <div class="col-sm-4">
-                        {% if user.profile.followed_by.all.count %}
+                        {% if users.profile.followers.count %}
                             <a href="#">
-                                <b>{{ user.profile.followed_by.count }}</b>
+                                <b>{{ users.profile.followers.count }}</b>
                             </a>
-                                Followers
+                        Followers
 
                         {% else %}
                             <b> 0 </b> Followers
-                            {{ user.profile.followsystem.followed_by.count }}
                         {% endif %}
                     </div>
                 </div>

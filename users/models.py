@@ -25,22 +25,22 @@ class Profile(models.Model):
         return f' @{self.user.username}'
 
 
-class FollowSystem(models.Model):
+#Following and followers system.
+class Contact(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
-    following= models.ManyToManyField(Profile, related_name='followed_by')
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
+    following= models.ManyToManyField(Profile, related_name='followers', blank=True)
+
 
     @classmethod
     def follow(cls, profile, another_profile):
-        obj = cls.objects.get_or_create(profile=profile)
-        obj.following.add(another_profile)
-        return obj
-    #
-    # @classmethod
-    # def unfollow(self, profile, another_profile):
-    #     obj = self.objects.get_or_create(profile=profile)
-    #     obj.follower.delete(another_profile)
+        object = cls.objects.get(profile=profile)
+        object.following.add(another_profile)
+
+    @classmethod
+    def unfollow(cls, profile, another_profile):
+        object = cls.objects.get(profile=profile)
+        object.following.remove(another_profile)
+
 
     def __str__(self):
-        return f'{self.profile},{self.following}'
+        return f'profile: {self.profile}, Following : {self.following.all()}'

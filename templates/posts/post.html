@@ -1,6 +1,6 @@
 {% load static %}
 <div class="col-lg-4 offset-lg-4">
-    <!--profile user picture-->
+    <!--thumbnail   user picture-->
     <div class="media">
         {% if post.profile.picture %}
         <a href="{% url 'users:detail' username=post.profile.user.username %}">

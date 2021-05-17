@@ -1,0 +1,24 @@
+{% load static%}
+<div class="media">
+        {% if contact.profile.picture %}
+            <a href="{% url 'users:detail' username=user.username %}">
+                <img
+                     height="35" class="mr-3 rounded-circle"
+                     src="{{ contact.profile.picture.url }}"
+                     alt="{{ contact.user.get_full_name }}"
+                >
+            </a>
+            {% else %}
+            <a href="{% url 'users:detail' username=user.username %}">
+                <img
+                    height="35" class="mr-3 rounded-circle"
+                    src="{% static 'img/default-profile.png' %}"
+                    alt="{{ contact.profile.user.get_full_name }}"
+                >
+            </a>
+
+            <div class="media-body">
+                <h5 class="mt-0">{{ post.user.username }}</h5>
+            </div>
+        {% endif %}
+ </div>
