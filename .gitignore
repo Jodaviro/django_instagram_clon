@@ -14,4 +14,4 @@ posts/migrations
 users/migrations
 .gitignore
 todos.txt
-
+**/migrations
