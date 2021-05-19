@@ -22,7 +22,29 @@ from users.forms import SignUpForm
 
 # Views
 
+def following(request, profile, new_user_profile):
+    """doesnt work yet"""
+    profile = request.user.profile
+    contact = profile.contact.following
+    return render(
+        request=request,
+        template_name='following.html',
+        context= {
+            'contact': contact,
+        }
+    )
+
+class FollowingView(LoginRequiredMixin, DetailView):
+    """doestn work yet"""
+    model = User
+    template_name = 'users/following.html'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    context_object_name = 'contact'
+
 class FollowOrUnforllowView(UpdateView, LoginRequiredMixin):
+    """ does't work yet
+    trying to transform de follow_or_unfollow in a class view"""
     slug_field = 'username'
     slug_url_kwarg = 'username'
 
@@ -37,26 +59,9 @@ def follow_or_unfollow(request, profile, instruction):
     else:
         Contact.unfollow(current_profile,another_profile)
 
-    return redirect(reverse('users:detail', kwargs={'username': another_profile.user.username}))
+    username= another_profile.user.username
+    return redirect(reverse('users:detail', kwargs={'username': username}))
 
-
-def following(request, profile, new_user_profile):
-    profile = request.user.profile
-    contact = profile.contact.following
-    return render(
-        request=request,
-        template_name='following.html',
-        context= {
-            'contact': contact,
-        }
-    )
-
-class FollowingView(LoginRequiredMixin, DetailView):
-    model = User
-    template_name = 'users/following.html'
-    slug_field = 'username'
-    slug_url_kwarg = 'username'
-    context_object_name = 'contact'
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
