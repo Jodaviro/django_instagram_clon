@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block head_content %}
-    <title>Following</title>
+    <title>Followers</title>
 {% endblock %}
 
 {% block container%}
@@ -9,20 +9,19 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-2 p-4" id="profile-box">
-
-            {% for profile in users.profile.contact.following.all %}
+            {% for contact in users.profile.followers.all %}
 
                 <div class="media">
-                    {% if profile.picture %}
-                        <a href="{% url 'users:detail' username=profile.user.username %}">
+                    {% if contact.profile.picture %}
+                        <a href="{% url 'users:detail' username=contact.profile.user.username %}">
                             <img
                                  height="35" class="mr-3 rounded-circle"
-                                 src="{{ profile.picture.url }}"
-                                 alt="{{ profile.user.get_full_name }}"
+                                 src="{{ contact.profile.picture.url }}"
+                                 alt="{{ contact.profile.user.get_full_name }}"
                             >
                         </a>
                         {% else %}
-                        <a href="{# url 'users:detail' username=profile.user.username #}">
+                        <a href="{% url 'users:detail' username=contact.profile.user.username %}">
                             <img
                                 height="35" class="mr-3 rounded-circle"
                                 src="{% static 'img/default-profile.png' %}"
@@ -30,13 +29,11 @@
                             >
                         </a>
                     {% endif %}
-
                         <div class="media-body">
-                            <h6 class="mt-0">{{ profile.user.username }}</h6>
+                            <h6 class="mt-0">{{ contact.profile.user.username }}</h6>
                         </div>
                 </div>
             {% endfor %}
-
         </div>
     </div>
 </div>

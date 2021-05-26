@@ -11,6 +11,7 @@ path('signup/', views.SignUpView.as_view(), name= 'signup'),
 path('me/profile/', views.ProfileUpdateView.as_view(), name= 'update_profile'),
 path('<str:username>/', views.UserDetailView.as_view() , name= 'detail'),
 path('<str:username>/following/', views.FollowingView.as_view() , name= 'following'),
+path('<str:username>/followers/', views.FollowersView.as_view() , name= 'followers'),
 path('<int:profile>/<str:instruction>/followorunfollow/', views.follow_or_unfollow, name= 'followorunfollow'),
 
 ]

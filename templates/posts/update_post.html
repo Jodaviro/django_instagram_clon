@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head_content %} 
-    <title>New post</title> 
+    <title>Update post</title>
 {% endblock %}
 
 
@@ -10,9 +10,9 @@
     <div class="row justify-content-md-center">
         <div class="col-5 p-4" id="profile-box">
 
-            <h4 class="text-center mt-3">Publish an image</h4>
+            <h4 class="text-center mt-3">Edit your post title</h4>
 <!--        New post form-->
-            <form action="{% url 'posts:create_post' %}" method="POST" enctype="multipart/form-data">
+            <form action="{% url 'posts:update' pk=post.pk %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
 
                 <div>
@@ -24,13 +24,9 @@
                         {{ form.title }}
                 </div>
 
-                <div class="form-group mt-3">
-                    {{  form.photo }}
-                </div>
-
             <!--Publish button-->
             <div class="d-grid gap-2 col-6 mx-auto" >
-                <button class="btn btn-primary btn-block mt-3" type="submit" > Publish now </button>
+                <button class="btn btn-primary btn-block mt-3" type="submit" > Update Title </button>
             </div>
             </form>
         </div>

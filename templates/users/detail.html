@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head_content %}
-    <title> @{{ user.username }}</title>
+    <title> @{{ users.username }}</title>
 {% endblock %}
 
 {% block container %}
@@ -33,15 +33,26 @@
                 <h2 style="font-weight: 100;">
                     {{ users.username }}
                     {% if users == request.user %}
-                        <a href="{% url 'users:update_profile' %}" class="ml-5 btn btn-sm btn-outline-dark">
+                        <a
+                            href="{% url 'users:update_profile' %}"
+                            class="ml-5 btn btn-sm btn-outline-dark"
+                        >
                             Edit profile
                         </a>
                     {% else %}
-                        <a
-                            href="{% url 'users:followorunfollow' profile=users.profile.pk instruction='fllw'%}"
-                            class="ml-5 btn btn-sm btn-primary">
-                            Follow
-                        </a>
+                        {% if users.profile not in user.profile.contact.following.all %}
+                            <a
+                                href="{% url 'users:followorunfollow' profile=users.profile.pk instruction='add'%}"
+                                class="ml-5 btn btn-sm btn-primary">
+                                Follow
+                            </a>
+                        {% else %}
+                            <a
+                                href="{% url 'users:followorunfollow' profile=users.profile.pk instruction='rm'%}"
+                                class="ml-5 btn btn-sm btn-danger">
+                                Unfollow
+                            </a>
+                        {% endif %}
                     {% endif %}
                 </h2>
 
@@ -55,7 +66,7 @@
 <!--                following count-->
                     <div class="col-sm-4">
                         {% if users.profile.contact.following.count %}
-                            <a href=" {% url 'users:following' username=user.profile.user.username%}">
+                            <a href="{% url 'users:following' username=users.username%}">
                                 <b>{{ users.profile.contact.following.count }}</b>
                             </a>
                         Following
@@ -67,7 +78,7 @@
 <!--                followers count -->
                     <div class="col-sm-4">
                         {% if users.profile.followers.count %}
-                            <a href="#">
+                            <a href="{% url 'users:followers' username=users.username %}">
                                 <b>{{ users.profile.followers.count }}</b>
                             </a>
                         Followers

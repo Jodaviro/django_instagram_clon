@@ -46,11 +46,7 @@ class ProfileForm(forms.ModelForm):
             raise ValidationError('You must provide a profile picture or a biography text to proceeed.')
 
 
-#Contact
-class ContactForm(forms.ModelForm):
-    class Meta:
-        fields = '__all__'
-        exclude = ['profile']
+
 
 #Signup
 class SignUpForm (forms.Form):

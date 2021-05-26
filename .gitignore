@@ -9,7 +9,6 @@ Pipfile.lock
 mydatabase
 staticfiles/
 envvars.sh
-instagram/settings.py
 posts/migrations
 users/migrations
 .gitignore

@@ -16,31 +16,28 @@ from users.models import User
 
 
 #forms
-from .forms import ProfileForm, ContactForm
+from .forms import ProfileForm
 from posts.forms import PostForm
 from users.forms import SignUpForm
 
 # Views
 
-def following(request, profile, new_user_profile):
-    """doesnt work yet"""
-    profile = request.user.profile
-    contact = profile.contact.following
-    return render(
-        request=request,
-        template_name='following.html',
-        context= {
-            'contact': contact,
-        }
-    )
+
+class FollowersView(LoginRequiredMixin, DetailView):
+    """Followers View"""
+    model = User
+    template_name = 'users/followers.html'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    context_object_name = 'users'
 
 class FollowingView(LoginRequiredMixin, DetailView):
-    """doestn work yet"""
+    """Following view"""
     model = User
     template_name = 'users/following.html'
     slug_field = 'username'
     slug_url_kwarg = 'username'
-    context_object_name = 'contact'
+    context_object_name = 'users'
 
 class FollowOrUnforllowView(UpdateView, LoginRequiredMixin):
     """ does't work yet
@@ -54,7 +51,7 @@ def follow_or_unfollow(request, profile, instruction):
     current_profile = request.user.profile
     another_profile = get_object_or_404(Profile, pk=profile)
 
-    if instruction == "fllw":
+    if instruction == "add":
         Contact.follow(current_profile,another_profile)
     else:
         Contact.unfollow(current_profile,another_profile)
