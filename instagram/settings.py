@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #cloudinary media file hots
-    # 'cloudinary_storage',
-    # 'cloudinary',
+    #cloudinary media file host
+    'cloudinary_storage',
+    'cloudinary',
 
     # Local apps
     'posts',
@@ -83,20 +83,22 @@ WSGI_APPLICATION = 'instagram.wsgi.application'
 
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': 'mydatabase',
-    # },
-    # uncoment for docker
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'db': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': '5432',
-        'NAME': 'postgres'
-    }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    },
+
+## uncoment for docker
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'db': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'db',
+#         'PORT': '5432',
+#         'NAME': 'postgres'
+#     },
+
 }
 
 
@@ -156,9 +158,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL= '/media/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# CLOUDINARY_URL = config('CLOUDINARY_URL')
+CLOUDINARY_URL = config('CLOUDINARY_URL', default='cloudinary://561925528734738:XNIO7YrYhlJkIk0lnAp6NsL4wCk@hobsuw6e7')
 
-# DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Activate Django-Heroku.heroku logs --tail
 django_heroku.settings(locals())
