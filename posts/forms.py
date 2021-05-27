@@ -1,8 +1,8 @@
 """Users Form"""
 # django
 from django.forms import ModelForm
-from posts.models import Post
-from django.forms.widgets import FileInput, Select, NumberInput
+from posts.models import Post, Comment
+from django.forms.widgets import FileInput, Select, NumberInput, Textarea
 
 # forms
 
@@ -29,3 +29,16 @@ class PostForm(ModelForm):
             }),
          }
 
+
+class CommentForm(ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ['post', 'user', 'text', 'likes']
+        exclude= ['post', 'user', 'likes']
+        widgets={'text': Textarea(attrs={
+            'class': 'form-control',
+            'placeholder': 'Insert your comment',
+            'required': True,
+        }),
+        }

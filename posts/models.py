@@ -15,8 +15,26 @@ class Post(models.Model):
     photo = models.ImageField(upload_to='posts/photo')
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(User, blank=True, related_name='likes')
+
+    def likes_count(self):
+        return self.likes.count()
 
     def __str__(self):
         return f'{self.title} by @{self.user}'
 
 
+class Comment(models.Model):
+    """Comment model for posts"""
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField(default="", max_length=300,)
+    likes = models.ManyToManyField(User, blank=True, related_name='like')
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    def likes_count(self):
+        return self.likes.count()
+
+    def __str__(self):
+        return f'by {self.user.username}: {self.text}'

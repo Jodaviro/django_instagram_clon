@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #cloudinary media file host
-    'cloudinary_storage',
-    'cloudinary',
+    # 'cloudinary_storage',
+    # 'cloudinary',
 
     # Local apps
     'posts',
@@ -158,12 +158,18 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL= '/media/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-CLOUDINARY_URL = config('CLOUDINARY_URL', default='cloudinary://561925528734738:XNIO7YrYhlJkIk0lnAp6NsL4wCk@hobsuw6e7')
 
+# CLOUDINARY_URL = config('CLOUDINARY_URL')
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME':'hobsuw6e7',
+#     'API_SECRET': 'XNIO7YrYhlJkIk0lnAp6NsL4wCk',
+#     'API_KEY': '561925528734738',
+# }
 DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Activate Django-Heroku.heroku logs --tail
 django_heroku.settings(locals())
+
 
 if config('DJANGO_PRODUCTION', default=False, cast=bool):
     from .settings_production import *
