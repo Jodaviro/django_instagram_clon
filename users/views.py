@@ -8,6 +8,7 @@ from django.views.generic import DetailView, ListView, FormView
 from django.views.generic.edit import UpdateView
 from django.contrib.auth import views as auth
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
 
 #models
 from .models import Profile, Contact
@@ -56,9 +57,8 @@ def follow_or_unfollow(request, profile, instruction):
     else:
         Contact.unfollow(current_profile,another_profile)
 
-    username= another_profile.user.username
-    return redirect(reverse('users:detail', kwargs={'username': username}))
 
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):

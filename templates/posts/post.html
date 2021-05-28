@@ -24,12 +24,12 @@
             <h5 class="mt-0">{{ post.user.username }}</h5>
         </div>
     </div>
-<!--list posts-->
-    <a href="{% url 'posts:detail' pk=post.pk %}">
-    <img
-        class="img-fluid mt-3 border rounded"
-        src="{{ post.photo.url }}" alt="{{ post.title }}"
-     >
+<!--Post image-->
+        <a href="{% url 'posts:detail' pk=post.pk %}">
+        <img
+            class="img-fluid mt-3 border rounded"
+            src="{{ post.photo.url }}" alt="{{ post.title }}"
+         >
     </a>
     {% if post.title %}
         <h6 class="ml-1 mt-1">{{ post.title }}</h6>
@@ -37,4 +37,5 @@
     <p></p>
     {% endif %}
     <p class="fw-lighter fst-italic small"> {{ post.created }} </p>
+    <i class="far fa-heart"></i>
 </div>

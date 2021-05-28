@@ -44,3 +44,22 @@ html, body {
     background: #fff;
 }
 
+#like{
+    font-size: 1.3em;
+    color: Tomato;
+}
+
+#like:hover{
+    font-size: 2em;
+    color: Tomato;
+}
+
+#comment{
+    font-size: 1.3rem; 
+    color: Gray;
+}
+
+#comment:hover{
+    font-size: 2rem; 
+    color: Gray;
+}

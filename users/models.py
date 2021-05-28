@@ -41,6 +41,9 @@ class Contact(models.Model):
         object = cls.objects.get(profile=profile)
         object.following.remove(another_profile)
 
-
+    def following_count(self):
+        return self.following.count()
+    
+    
     def __str__(self):
         return f'profile: {self.profile}, Following : {self.following.all()}'

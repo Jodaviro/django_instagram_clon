@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 
     #cloudinary media file host
     # 'cloudinary_storage',
@@ -165,7 +166,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #     'API_SECRET': 'XNIO7YrYhlJkIk0lnAp6NsL4wCk',
 #     'API_KEY': '561925528734738',
 # }
-DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Activate Django-Heroku.heroku logs --tail
 django_heroku.settings(locals())
