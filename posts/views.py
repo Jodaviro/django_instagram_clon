@@ -28,8 +28,8 @@ def like_or_dislike_post(request, post, instruction):
     else:
         post.likes.remove(current_user)
 
-    # return HttpResponseRedirect(request.META['HTTP_REFERER'])
-    return HttpResponse ('<script>history.back();</script>')
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    # return HttpResponse ('<script>history.back();</script>')
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
     """DOEST WORK YETComment Create View"""
