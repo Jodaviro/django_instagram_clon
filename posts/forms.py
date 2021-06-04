@@ -27,7 +27,10 @@ class CommentForm(ModelForm):
         exclude= ['post', 'user', 'likes']
         widgets={'text': Textarea(attrs={
             'class': 'form-control',
+            'cols': 1,
+            'rows': 2,
             'placeholder': 'Insert your comment',
             'required': True,
+            'label': False,
         }),
         }

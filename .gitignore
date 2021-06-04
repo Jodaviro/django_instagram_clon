@@ -14,3 +14,6 @@ users/migrations
 .gitignore
 todos.txt
 /data/db/**
+**/migrations
+testingrequirements.txt
+chromedriver

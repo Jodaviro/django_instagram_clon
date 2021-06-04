@@ -18,10 +18,6 @@ class Post(models.Model):
     modified = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(User, blank=True, related_name='likes')
 
-    @classmethod
-    def like_post(cls, user, another_user):
-        object= cls.objects.get(user=user)
-        object.likes.add(another_user)
 
     def likes_count(self):
         return self.likes.count()

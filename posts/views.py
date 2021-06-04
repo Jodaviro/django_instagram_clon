@@ -31,15 +31,45 @@ def like_or_dislike_post(request, post, instruction):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
     # return HttpResponse ('<script>history.back();</script>')
 
+
 class CommentCreateView(LoginRequiredMixin, CreateView):
     """DOEST WORK YETComment Create View"""
-    model = Comment
+    model = Post
     form_class = CommentForm
+    template_name = 'posts/comments.html'
+    slug_field = 'pk'
+    slug_url_kwarg = 'pk'
+
+    # queryset = Comment.objects.filter(post=slug_field)
+
+    # def get_context_data(self, **kwargs):
+    #     super().get_context_data(**kwargs)
+    #     comment= self.get_object()
+    #     context['post']= Post.objects.get(pk=slug_field)
+    #     return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+
+        import pdb; pdb.set_trace()
+
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
 
     def form_valid(self,form):
         form.instance.user= self.request.user
         form.instance.profile = self.request.user.profile
+        form.instance.post= self.object.pk
         return super().form_valid(form)
+
+    
+    def get_success_url(self):
+        pk = self.object.pk
+        return reverse('posts:detail', kwargs={'pk': pk})
 
 
 class PostUpdateView(UpdateView, LoginRequiredMixin):
@@ -60,11 +90,12 @@ class PostDeleteView(DeleteView, LoginRequiredMixin):
         username = self.request.user.username
         return reverse('users:detail', kwargs={'username': username})
 
-class PostDetailView(DetailView, LoginRequiredMixin):
+class PostDetailView(DetailView, CommentCreateView, LoginRequiredMixin):
     """Single post view"""
     model = Post
     context_object_name = 'post'
     template_name = 'posts/detail.html'
+
 
 
 class PostsFeedView(LoginRequiredMixin, ListView):
@@ -90,7 +121,5 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         form.instance.profile = self.request.user.profile
         return super().form_valid(form)
-
-
 
 

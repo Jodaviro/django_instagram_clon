@@ -63,3 +63,8 @@ html, body {
     font-size: 2rem; 
     color: Gray;
 }
+
+#liked{
+    font-size: 1.3em;
+    color: Tomato
+}

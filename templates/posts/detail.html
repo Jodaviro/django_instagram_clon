@@ -53,16 +53,21 @@
   
     <!-- Like and comment icon -->
     <div>
-        <a href="{% url 'posts:likeordislikepost' post=post.pk instruction='like' %}">
-            <span style="font-size: 1.0rem; color: Tomato;">
-                <i class="far fa-heart" id="like"></i>
-            </span>
+
+
+        {% if request.user in post.likes.all %}
+        <a href="{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}">
+            <i class="fas fa-heart" id="liked" ></i>
         </a>
+
+        {% else %}
+        <a href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}">
+            <i class="far fa-heart" id="like"></i>
+        </a>
+        {% endif %}
     
-        <a href="">
-            <span style="font-size: 1.3rem; color: Gray;">
-                <i class="far fa-comment" id='comment'></i>
-            </span>
+        <a href="{% url 'posts:create_comment' pk=post.pk %}">
+            <i class="far fa-comment" id='comment'></i>
         </a>
 
     </div>
@@ -95,7 +100,7 @@
     {% endif %}
     
     {% if request.path != '/' %}
-        <form method="GET" action="{% url 'posts:create_comment' %}">
+        <form method="GET" action="{% url 'posts:create_comment' pk=post.pk %}">
             {% csrf_token %}
             <input type="text" name="text" placeholder="Add a comment">
             <input type="submit" value="Publish">
