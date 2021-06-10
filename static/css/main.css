@@ -44,27 +44,31 @@ html, body {
     background: #fff;
 }
 
-#like{
+.fa-heart{
     font-size: 1.3em;
     color: Tomato;
 }
 
-#like:hover{
+.fa-heart:hover{
     font-size: 2em;
     color: Tomato;
 }
 
-#comment{
+
+
+}
+
+.fa-heart{
+    font-size: 1.3em;
+    color: Tomato
+}
+
+.fa-comment{
     font-size: 1.3rem; 
     color: Gray;
 }
 
-#comment:hover{
+.fa-comment:hover{
     font-size: 2rem; 
     color: Gray;
-}
-
-#liked{
-    font-size: 1.3em;
-    color: Tomato
 }

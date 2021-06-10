@@ -84,21 +84,21 @@ WSGI_APPLICATION = 'instagram.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
-    },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'mydatabase',
+    # },
 
-## uncoment for docker
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'db': 'postgres',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
-#         'HOST': 'db',
-#         'PORT': '5432',
-#         'NAME': 'postgres'
-#     },
+# # uncoment for docker
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'db': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': '5432',
+        'NAME': 'postgres'
+    },
 
 }
 

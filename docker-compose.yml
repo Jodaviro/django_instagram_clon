@@ -10,12 +10,11 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_HOST=db
   web:
     build: .
     restart: always
-    command: python manage.py runserver 0.0.0.0:8000
+    command: bash -c "python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:

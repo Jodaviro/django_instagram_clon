@@ -7,10 +7,10 @@
 
 {% block container %}
 
-{% if error %}
+{% if form.errors %}
     <div class="alert alert-danger col-sm-10 mx-auto" role="alert" >
-        <p>{{error}}</p>
-    </div>
+        <p>{{form.errors}}</p>
+    </div>  
 {% endif %}
 
 
@@ -30,7 +30,7 @@
     <div class="d-grid gap-2 col-6 mx-auto" >
         <button class="btn btn-primary btn-block mt-3" type="submit" > Login</button>
     </div>
-    </form>
+</form>
 <!--New account registration-->
 <div class="fw-lighter text-center mt-5">
     <p class="fw-lighter text-center"> Don't have an account? </p> <a class="fw-lighter text-center" href="{% url 'users:signup' %}">Register</a>

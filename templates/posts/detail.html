@@ -62,12 +62,12 @@
 
         {% else %}
         <a href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}">
-            <i class="far fa-heart" id="like"></i>
+            <i class="far fa-heart"></i>
         </a>
         {% endif %}
     
         <a href="{% url 'posts:create_comment' pk=post.pk %}">
-            <i class="far fa-comment" id='comment'></i>
+            <i class="far fa-comment"></i>
         </a>
 
     </div>

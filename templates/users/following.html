@@ -22,7 +22,7 @@
                             >
                         </a>
                         {% else %}
-                        <a href="{# url 'users:detail' username=profile.user.username #}">
+                        <a href="{% url 'users:detail' username=profile.user.username %}">
                             <img
                                 height="35" class="mr-3 rounded-circle"
                                 src="{% static 'img/default-profile.png' %}"
