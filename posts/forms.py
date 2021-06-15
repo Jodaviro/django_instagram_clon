@@ -23,8 +23,8 @@ class CommentForm(ModelForm):
 
     class Meta:
         model = Comment
-        fields = ['post', 'user', 'text', 'likes']
-        exclude= ['post', 'user', 'likes']
+        fields = ['post', 'user', 'text', 'likes', 'profile']
+        exclude= ['user', 'likes', 'profile', 'post']
         widgets={'text': Textarea(attrs={
             'class': 'form-control',
             'cols': 1,

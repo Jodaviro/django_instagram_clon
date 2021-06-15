@@ -1,20 +1,33 @@
 {% extends 'base.html' %}
+
 {% load static %}
+
+
 
 {% block head_content %}
     <title>Comments</title>
 {% endblock %}
 
+
 {% block container %}
-<div class="container">
+{% include 'posts/post.html'%}
+<div class="row justify-content-md-center">
+        <div class="col-5 p-4">
+            {% for comment in comments %}
+                {{comment}}
+            {% endfor %}
     <div class="row justify-content-md-center">
-        <div class="col-6 p-4" id="profile-box">
+        <div class="col-5 p-4" id="profile-box">
+
             <div class="form-group">
-                <form method="POST" action="#"> {% csrf_token %}
-                    {{form.text}}
-                <input class="btn btn-primary" type="submit" value="Submit">
-            </form>
-        </div>
+                <form method="POST" action="{% url 'posts:create_comment' pk=post.pk %}"> 
+                    {% csrf_token %}
+          
+                    {{ form }}
+                    
+                    <input class="btn btn-primary" type="submit" value="Submit">
+                </form>
+            </div>
         </div>
     </div>
 </div>

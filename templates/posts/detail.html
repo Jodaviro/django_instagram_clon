@@ -71,18 +71,21 @@
         </a>
 
     </div>
-    {% if post.likes.count > 0 %}
-        <p> {{post.likes.count}} Likes</p>
-    {% endif %}
-    {% if post.title %}
-        <h6 class="ml-1 mt-1">{{ post.title }}</h6>
-    {% else %}
-        <p></p>
-    {% endif %}
 
-    <p class="fw-lighter fst-italic small mt-2"> 
-        {{ post.created|naturaltime }} 
-    </p>
+    <div class="info">
+        {% if post.likes.count > 0 %}
+            <p> {{post.likes.count}} Likes</p>
+        {% endif %}
+        {% if post.title %}
+            <h6 class="ml-1 mt-1">{{ post.title }}</h6>
+        {% else %}
+            <p></p>
+        {% endif %}
+
+        <p class="fw-lighter fst-italic small mt-2"> 
+            {{ post.created|naturaltime }} 
+        </p>
+    </div>
 
     {% if user == post.profile.user and request.path != '/' %}
 

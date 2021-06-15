@@ -33,11 +33,13 @@ html, body {
 .nav-icon a:hover {
     color: #1d5e72;;
 }
+
 #profile-box {
     background: #fff;
     border: 1px solid rgba(0,0,0,.0975);
     border-radius: 1px;
     margin-top: 6em;
+    
 }
 
 #user-posts #post-thumb {
@@ -56,8 +58,6 @@ html, body {
 
 
 
-}
-
 .fa-heart{
     font-size: 1.3em;
     color: Tomato
@@ -71,4 +71,8 @@ html, body {
 .fa-comment:hover{
     font-size: 2rem; 
     color: Gray;
+}
+
+#profilepic{
+    object-fit: contain;
 }

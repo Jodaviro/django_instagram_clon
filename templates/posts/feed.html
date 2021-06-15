@@ -8,11 +8,11 @@
 {% block container %}
     <div class="row">
         {% for post in posts %}
-            {% include 'posts/detail.html' %}
+            {% include 'posts/post.html' %}
         {% endfor %}
     </div>
 
-<input type="hidden" id="refreshed" value="false">
+<!-- <input type="hidden" id="refreshed" value="false">
 <script type="text/javascript">
     $(window).load(function(){
         if ($('#refreshed').val() == "false") {
@@ -23,5 +23,5 @@
           location.reload();
         }
       });
-</script>
+</script> -->
 {% endblock %}

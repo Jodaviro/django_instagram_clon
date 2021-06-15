@@ -2,10 +2,10 @@
 
 #django
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
@@ -16,12 +16,13 @@ from posts.forms import PostForm, CommentForm
 from posts.models import Post, Comment
 # Create your views here.
 
+
 @login_required
 def like_or_dislike_post(request, post, instruction):
     """Like or dislike Posts"""
 
     current_user= request.user
-    post= get_object_or_404(Post, pk=post)
+    post = get_object_or_404(Post, pk=post)
 
     if instruction =='like':
         post.likes.add(current_user)
@@ -32,44 +33,6 @@ def like_or_dislike_post(request, post, instruction):
     # return HttpResponse ('<script>history.back();</script>')
 
 
-class CommentCreateView(LoginRequiredMixin, CreateView):
-    """DOEST WORK YETComment Create View"""
-    model = Post
-    form_class = CommentForm
-    template_name = 'posts/comments.html'
-    slug_field = 'pk'
-    slug_url_kwarg = 'pk'
-
-    # queryset = Comment.objects.filter(post=slug_field)
-
-    # def get_context_data(self, **kwargs):
-    #     super().get_context_data(**kwargs)
-    #     comment= self.get_object()
-    #     context['post']= Post.objects.get(pk=slug_field)
-    #     return context
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-
-        import pdb; pdb.set_trace()
-
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
-
-    def form_valid(self,form):
-        form.instance.user= self.request.user
-        form.instance.profile = self.request.user.profile
-        form.instance.post= self.object.pk
-        return super().form_valid(form)
-
-    
-    def get_success_url(self):
-        pk = self.object.pk
-        return reverse('posts:detail', kwargs={'pk': pk})
 
 
 class PostUpdateView(UpdateView, LoginRequiredMixin):
@@ -90,7 +53,7 @@ class PostDeleteView(DeleteView, LoginRequiredMixin):
         username = self.request.user.username
         return reverse('users:detail', kwargs={'username': username})
 
-class PostDetailView(DetailView, CommentCreateView, LoginRequiredMixin):
+class PostDetailView(DetailView, LoginRequiredMixin):
     """Single post view"""
     model = Post
     context_object_name = 'post'
@@ -112,9 +75,9 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'posts/new.html'
-    context_object_name = 'form'
-    success_url = reverse_lazy('posts:feed')
+   
 
+    
     def form_valid(self, form):
         """creates a form instance
          with hidden user and profile values"""
@@ -122,4 +85,48 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         form.instance.profile = self.request.user.profile
         return super().form_valid(form)
 
+    def get_success_url(self):
+        pk = self.object.pk
+        return reverse('posts:detail', kwargs={'pk': pk})
 
+
+
+
+
+class PostCreateCommentView(PostDetailView, FormMixin ,LoginRequiredMixin):
+    """Comment Create View"""
+    form_class = CommentForm
+    template_name = 'posts/comments.html'
+
+    def get_context_data(self, **kwargs):
+        """gets the form in order to be rendered"""
+        context = super().get_context_data(**kwargs)
+        self.object = self.get_object()
+        context['comments'] = Comment.objects.filter(post=self.object.pk)
+        context['form']= self.form_class
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+
+        """creates a form instance
+         with hidden user and profile, and post values"""
+        form.instance.post= self.object
+        form.instance.user= self.request.user
+        form.instance.profile = self.request.user.profile
+        
+
+        if form.is_valid():
+            form.save()
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+    
+    def get_success_url(self):
+        pk = self.object.pk
+        return reverse('posts:detail', kwargs={'pk': pk})
+
+    
+
+ 

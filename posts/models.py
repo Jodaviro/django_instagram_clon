@@ -7,7 +7,7 @@ from users.models import Profile
 
 # Create your models here.
 
-#para importar el modelo profile, en el siguiente ejemplo lo hicimos de la sguiente forma
+
 class Post(models.Model):
     """Post model class for post"""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
