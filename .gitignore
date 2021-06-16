@@ -9,3 +9,7 @@ Pipfile.lock
 mydatabase
 staticfiles/
 envvars.sh
+chromedriver
+data/db/**
+testingrequirements.txt
+todos.txt
