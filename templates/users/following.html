@@ -1,38 +1,47 @@
-{% extends 'base.html' %} {% load static%} {% block head_content %}
+{% extends 'base.html' %} {% load static%} 
+
+{% block head_content %}
 <title>Following</title>
-{% endblock %} {% block container%}
+{% endblock %} 
+
+{% block container%}
 
 <div class="container">
-  <div class="row justify-content-md-center">
-    <div class="col-2 p-4" id="profile-box">
-      {% for profile in users.profile.contact.following.all %}
-
-      <div class="media">
-        {% if profile.picture %}
-					<a href="{% url 'users:detail' username=profile.user.username %}">
-						<img
-							height="35"
-							class="mr-3 rounded-circle"
-							src="{{ profile.picture.url }}"
-							alt="{{ profile.user.get_full_name }}"
-						/>
-        </a>
-        {% else %}
-					<a href="{% url 'users:detail' username=profile.user.username %}">
-						<img
-							height="35"
-							class="mr-3 rounded-circle"
-							src="{% static 'img/default-profile.png' %}"
-							alt="{{ contact.profile.user.get_full_name }}"
-						/>
-					</a>
-        {% endif %}
-
-        <div class="media-body">
-          <h6 class="mt-0">{{ profile.user.username }}</h6>
-        </div>
-      </div>
-      {% endfor %}
+  <div class="row d-flex justify-content-md-center align-content-center">
+    <div class=" col-12 col-md-3 p-2" id="profile-box">
+      <h2 class="text text-md-center">Following:</h2>
+      <table class="table table-striped table-hover">
+				<tr>
+					<td>
+            {% for profile in users.profile.contact.following.all %}
+              <div class="media">
+                {% if profile.picture %}
+                  <a href="{% url 'users:detail' username=profile.user.username %}">
+                    <img
+                      height="35"
+                      class="mr-3 rounded-circle"
+                      src="{{ profile.picture.url }}"
+                      alt="{{ profile.user.get_full_name }}"
+                    />
+                </a>
+                {% else %}
+                  <a href="{% url 'users:detail' username=profile.user.username %}">
+                    <img
+                      height="35"
+                      class="mr-3 rounded-circle"
+                      src="{% static 'img/default-profile.png' %}"
+                      alt="{{ contact.profile.user.get_full_name }}"
+                    />
+                  </a>
+                {% endif %}
+                <div class="media-body">
+                  <h6 class="mt-0">{{ profile.user.username }}</h6>
+                </div>
+              </div>
+            {% endfor %}
+          </td>
+        </tr>    
+      </table>      
     </div>
   </div>
 </div>

@@ -23,7 +23,7 @@
     height: 5rem;
 }
 
-.media img, h5{
+.media img, h5, p{
     height: 5rem;
     font-size: 3rem;
 }
@@ -49,6 +49,7 @@
     border: 1px solid rgba(0,0,0,.0975);
     border-radius: 1px;
     margin-top: 6em;
+    width: 50rem;
 }
 
 #user-posts #post-thumb {
@@ -85,4 +86,12 @@
 
 .fw-lighter > p, a{
     font-size: 1.5rem;
+}
+
+.text{
+    font-size: 3rem;
+}
+
+.comment{ 
+    top: 6rem;
 }

@@ -76,3 +76,11 @@ html, body {
 #profilepic{
     object-fit: contain;
 }
+
+.comment{
+    top: 39px;
+}
+
+a{
+    text-decoration: none;
+}

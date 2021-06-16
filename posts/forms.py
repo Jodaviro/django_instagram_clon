@@ -2,7 +2,7 @@
 # django
 from django.forms import ModelForm
 from posts.models import Post, Comment
-from django.forms.widgets import FileInput, Select, NumberInput, Textarea
+from django.forms.widgets import FileInput, Textarea
 
 # forms
 
@@ -27,10 +27,10 @@ class CommentForm(ModelForm):
         exclude= ['user', 'likes', 'profile', 'post']
         widgets={'text': Textarea(attrs={
             'class': 'form-control',
-            'cols': 1,
-            'rows': 2,
+            'cols' : 1,
+            'rows': 1,
             'placeholder': 'Insert your comment',
             'required': True,
-            'label': False,
+            'labels': False,
         }),
         }

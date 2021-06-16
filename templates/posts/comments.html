@@ -5,31 +5,73 @@
 
 
 {% block head_content %}
-    <title>Comments</title>
+<title>Comments</title>
 {% endblock %}
 
 
 {% block container %}
 {% include 'posts/post.html'%}
-<div class="row justify-content-md-center">
-        <div class="col-5 p-4">
-            {% for comment in comments %}
-                {{comment}}
-            {% endfor %}
-    <div class="row justify-content-md-center">
-        <div class="col-5 p-4" id="profile-box">
 
-            <div class="form-group">
-                <form method="POST" action="{% url 'posts:create_comment' pk=post.pk %}"> 
-                    {% csrf_token %}
-          
-                    {{ form }}
-                    
-                    <input class="btn btn-primary" type="submit" value="Submit">
-                </form>
-            </div>
-        </div>
-    </div>
+<!-- form comment field -->
+<div class="comment row d-flex justify-content-lg-center mb-4 sticky-top">
+  <div class="col-lg-4 p-4">
+
+    <div class="form-floating" >
+      <form method="POST" action="{% url 'posts:create_comment' pk=post.pk %}">
+        {% csrf_token %}
+          {{ form.text }}
+        <input class="btn-outline-primary offset-10" type="submit" value="Submit">
+      </form>
+    </div> 
+  </div>
 </div>
+<!-- /form comment field -->
 
-{% endblock %}
+<!-- comments -->
+{% for comment in comments %}
+  <div class="row justify-content-lg-center">
+    <div class="col-lg-5">
+      <div class="row mb-2 mb-lg-3">
+
+        <!-- user profile picture thumbnail -->
+        <div class=" media col-lg-1 offset-lg-1">
+          {% if comment.profile.picture %}
+            <a href="{% url 'users:detail' username=post.profile.user.username %}">
+              <img height="35" class="mr-3 rounded-circle" src="{{ comment.profile.picture.url }}"
+                alt="{{ post.user.get_full_name }}"
+              >
+            </a>
+
+          {% else %}
+            <a href="{% url 'users:detail' username=post.profile.user.username %}">
+              <img height="35" class="mr-3 rounded-circle" src="{% static 'img/default-profile.png' %}"
+                alt="{{ post.user.get_full_name }}" id="profilepic"
+              >
+            </a>
+          {% endif%}
+        </div> 
+        <!-- /user profile picture thumbnail -->
+
+
+        <!-- username -->
+        <div class="col-lg-3 pt-lg-2  text">
+          <strong>{{comment.user.username}}</strong>: 
+        </div>
+        
+
+        <!-- comment -->
+        <div class="col text ms-lg-1 mb-3 pt-lg-2">
+          {{comment.text}} 
+        </div>
+        
+
+      </div>        
+    </div>      
+  </div>    
+  <!-- comments -->      
+{% endfor %}
+  
+   
+  
+
+  {% endblock %}

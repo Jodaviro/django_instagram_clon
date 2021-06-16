@@ -101,14 +101,7 @@
             Delete Post
         </a>
     {% endif %}
-    
-    {% if request.path != '/' %}
-        <form method="GET" action="{% url 'posts:create_comment' pk=post.pk %}">
-            {% csrf_token %}
-            <input type="text" name="text" placeholder="Add a comment">
-            <input type="submit" value="Publish">
-        </form>
-    {% endif %}
+
 </div>
 
 {% endblock %}

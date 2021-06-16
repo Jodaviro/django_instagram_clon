@@ -9,6 +9,7 @@ from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
+
 #forms
 from posts.forms import PostForm, CommentForm
 
@@ -80,7 +81,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     
     def form_valid(self, form):
         """creates a form instance
-         with hidden user and profile values"""
+         for hidden user and profile fields"""
         form.instance.user = self.request.user
         form.instance.profile = self.request.user.profile
         return super().form_valid(form)
@@ -90,11 +91,9 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         return reverse('posts:detail', kwargs={'pk': pk})
 
 
-
-
-
 class PostCreateCommentView(PostDetailView, FormMixin ,LoginRequiredMixin):
-    """Comment Create View"""
+    """Comment Create View inherits from PostDetailView
+    so in order to display CommentForm it was required to add FormMixin class """
     form_class = CommentForm
     template_name = 'posts/comments.html'
 
@@ -111,12 +110,11 @@ class PostCreateCommentView(PostDetailView, FormMixin ,LoginRequiredMixin):
         form = self.get_form()
 
         """creates a form instance
-         with hidden user and profile, and post values"""
+         for hidden user, profile, and post fields"""
         form.instance.post= self.object
         form.instance.user= self.request.user
         form.instance.profile = self.request.user.profile
         
-
         if form.is_valid():
             form.save()
             return self.form_valid(form)
@@ -125,7 +123,7 @@ class PostCreateCommentView(PostDetailView, FormMixin ,LoginRequiredMixin):
     
     def get_success_url(self):
         pk = self.object.pk
-        return reverse('posts:detail', kwargs={'pk': pk})
+        return reverse('posts:create_comment', kwargs={'pk': pk})
 
     
 
