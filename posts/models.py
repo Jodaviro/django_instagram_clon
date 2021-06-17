@@ -36,6 +36,9 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
+    @classmethod
+    def comments_count(cls, some_post):
+        return cls.objects.filter(post=some_post.pk).count()
 
     def likes_count(self):
         return self.likes.count()
