@@ -6,22 +6,13 @@
 {% endblock %}
 
 {% block container %}
-    <div class="row">
-        {% for post in posts %}
-            {% include 'posts/post.html' %}
-        {% endfor %}
-    </div>
+  <div class="row">
+    {% for post in posts %}
+      {% include 'posts/post.html' %}
+    {% endfor %}
+  </div>
+{% endblock %}
 
-<!-- <input type="hidden" id="refreshed" value="false">
-<script type="text/javascript">
-    $(window).load(function(){
-        if ($('#refreshed').val() == "false") {
-          $('#refreshed').val("true"); 
-        }
-        else {
-          $('#refreshed').val("false");
-          location.reload();
-        }
-      });
-</script> -->
+{% block extrajs %}
+  <script src="{% static 'js/fetchs.js' %}">   </script>
 {% endblock %}

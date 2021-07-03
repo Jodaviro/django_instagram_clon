@@ -56,14 +56,14 @@
 
 
         {% if request.user in post.likes.all %}
-        <a href="{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}">
-            <i class="fas fa-heart" id="liked" ></i>
-        </a>
+            <a href="{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}">
+                <i class="fas fa-heart" id="liked" ></i>
+            </a>
 
         {% else %}
-        <a href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}">
-            <i class="far fa-heart"></i>
-        </a>
+            <a href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}">
+                <i class="far fa-heart"></i>
+            </a>
         {% endif %}
     
         <a href="{% url 'posts:create_comment' pk=post.pk %}">
@@ -91,16 +91,25 @@
 
         <a
             href="{% url 'posts:update' pk=post.pk %}"
-            class="ml-5 btn btn-sm btn-outline-dark">
+            class="ml-5 btn btn-sm btn-outline-dark"
+        >
             Edit Title
         </a>
 
         <a
-            href="{% url 'posts:delete' pk=post.pk %}"
-            class="ml-5 btn btn-sm btn-outline-danger">
+            href="{% url 'posts:delete' pk=post.pk %}" type="button"
+            class="ml-5 btn btn-sm btn-outline-danger"
+            class="btn btn-primary" data-bs-toggle="modal" 
+            data-bs-target="#exampleModal"
+        >
             Delete Post
         </a>
-    {% endif %}
+        <!-- Button trigger modal -->
+
+        <!-- Modal -->
+            {% include 'posts/post_confirm_delete.html' %}
+            {% endif %}
+            
 
 </div>
 

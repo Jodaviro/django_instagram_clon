@@ -12,15 +12,19 @@
 		{% if post.profile.picture %}
 		
 		<a href="{% url 'users:detail' username=post.profile.user.username %}">
-			<img height="35" class="mr-3 rounded-circle" src="{{ post.profile.picture.url }}"
-				alt="{{ post.user.get_full_name }}">
+			<img 
+				height="35" class="mr-3 rounded-circle" src="{{ post.profile.picture.url }}"
+				alt="{{ post.user.get_full_name }}"
+			>
 		</a>
 
 		{% else %}
 		
 		<a href="{% url 'users:detail' username=post.profile.user.username %}">
-			<img height="35" class="mr-3 rounded-circle" src="{% static 'img/default-profile.png' %}"
-				alt="{{ post.user.get_full_name }}" id="profilepic">
+			<img 
+				height="35" class="mr-3 rounded-circle" src="{% static 'img/default-profile.png' %}"
+				alt="{{ post.user.get_full_name }}" id="profilepic"
+			>
 		</a>
 
 		{% endif%}
@@ -43,14 +47,14 @@
 
 
 		{% if request.user in post.likes.all %}
-		<a href="{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}">
-			<i class="fas fa-heart" id="liked"></i>
-		</a>
+			<a href="{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}" id="filledlike" onclick="filledLike()">
+				<i class="fas fa-heart" id="liked"></i>
+			</a>
 
 		{% else %}
-		<a href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}">
-			<i class="far fa-heart"></i>
-		</a>
+			<a href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}" id="emptylike" onclick="emptyLike()">
+				<i class="far fa-heart"></i>
+			</a>
 		{% endif %}
 
 		<a href="{% url 'posts:create_comment' pk=post.pk %}">

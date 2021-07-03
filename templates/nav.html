@@ -30,7 +30,7 @@
 					<a class="nav-item dropdown" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
 						aria-expanded="false">
 						{% if user.profile.picture %}
-						<img class="d-inline-block align-top rounded-circle" src="{{ user.profile.picture.url }}" height="35" />
+							<img class="d-inline-block align-top rounded-circle" src="{{ user.profile.picture.url }}" height="35" />
 						{% else %}
 						<img class="d-inline-block align-top rounded-circle" src="{% static 'img/default-profile.png' %}"
 							height="35" />

@@ -21,7 +21,9 @@ from posts.models import Post, Comment
 @login_required
 def like_or_dislike_post(request, post, instruction):
     """Like or dislike Posts"""
-
+    import json; post_data = json.loads(request.body)
+    print(post_data)
+    import pdb; pdb.set_trace()
     current_user= request.user
     post = get_object_or_404(Post, pk=post)
 
@@ -49,6 +51,7 @@ class PostUpdateView(UpdateView, LoginRequiredMixin):
 class PostDeleteView(DeleteView, LoginRequiredMixin):
     """Delete post view"""
     model = Post
+
 
     def get_success_url(self):
         username = self.request.user.username
@@ -92,13 +95,15 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 
 
 class PostCreateCommentView(PostDetailView, FormMixin ,LoginRequiredMixin):
-    """Comment Create View inherits from PostDetailView
-    so in order to display CommentForm it was required to add FormMixin class """
+    """
+    Comment Create View inherits from PostDetailView
+    so in order to display CommentForm it was required to add FormMixin class 
+    """
     form_class = CommentForm
     template_name = 'posts/comments.html'
 
     def get_context_data(self, **kwargs):
-        """gets the form in order to be rendered"""
+        """gets the form in order to be rendered, and the comments related to the post"""
         context = super().get_context_data(**kwargs)
         self.object = self.get_object()
         context['comments'] = Comment.objects.filter(post=self.object.pk)
