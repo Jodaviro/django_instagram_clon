@@ -4,7 +4,7 @@
 This is a beta version of an instagram clon I've made using Django, Bootstrap and Postgresql.
 
 Some features like edit post, comments, follow, or like button still mising. They will be implemented latter. 
-(UPDATE: Missing features have been already implemented on the beta branch, soon they  will be deployed. Please go and check the beta branch)
+(UPDATE: Missing features have been already implemented on the beta branch, soon they  will be deployed. Please go and check the [beta branch](https://github.com/Jodaviro/django_instagram_clon/tree/beta))
 
 After signup you will have to provide a profile image or a short biograpy in order to use the app.
 
