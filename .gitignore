@@ -16,7 +16,7 @@ chromedriver
 instagram/settings.py
 
 
-# execpions
+# exeptions
 posts/migrations/*
 !posts/migrations/__init__.py
 users/migrations/*
