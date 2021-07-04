@@ -9,13 +9,17 @@ Pipfile.lock
 mydatabase
 staticfiles/
 envvars.sh
-posts/migrations
-users/migrations
 .gitignore
 todos.txt
-/data/db/**
-**/migrations
 testingrequirements.txt
 chromedriver
 instagram/settings.py
-README.md
+
+
+# exeptions
+posts/migrations/*
+!posts/migrations/__init__.py
+users/migrations/*
+!users/migrations/__init__.py
+data/db/**
+!data/db/.gitkeep

@@ -9,6 +9,7 @@ from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
+from django.http import JsonResponse
 
 #forms
 from posts.forms import PostForm, CommentForm
@@ -21,7 +22,6 @@ from posts.models import Post, Comment
 @login_required
 def like_or_dislike_post(request, post, instruction):
     """Like or dislike Posts"""
-
     current_user= request.user
     post = get_object_or_404(Post, pk=post)
 
@@ -30,10 +30,15 @@ def like_or_dislike_post(request, post, instruction):
     else:
         post.likes.remove(current_user)
 
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    count = post.likes.count()
+
+
+    
+    
+    return JsonResponse({'likes': count})
+    
+    # return HttpResponseRedirect(request.META['HTTP_REFERER'])
     # return HttpResponse ('<script>history.back();</script>')
-
-
 
 
 class PostUpdateView(UpdateView, LoginRequiredMixin):
@@ -49,6 +54,7 @@ class PostUpdateView(UpdateView, LoginRequiredMixin):
 class PostDeleteView(DeleteView, LoginRequiredMixin):
     """Delete post view"""
     model = Post
+
 
     def get_success_url(self):
         username = self.request.user.username
@@ -92,13 +98,15 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 
 
 class PostCreateCommentView(PostDetailView, FormMixin ,LoginRequiredMixin):
-    """Comment Create View inherits from PostDetailView
-    so in order to display CommentForm it was required to add FormMixin class """
+    """
+    Comment Create View inherits from PostDetailView
+    so in order to display CommentForm it was required to add FormMixin class 
+    """
     form_class = CommentForm
     template_name = 'posts/comments.html'
 
     def get_context_data(self, **kwargs):
-        """gets the form in order to be rendered"""
+        """gets the form in order to be rendered, and the comments related to the post"""
         context = super().get_context_data(**kwargs)
         self.object = self.get_object()
         context['comments'] = Comment.objects.filter(post=self.object.pk)
