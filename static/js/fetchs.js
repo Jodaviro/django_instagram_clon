@@ -1,18 +1,33 @@
 
-const filledLike = ()=>{
-    const response = document.getElementById("filledlike")
-    const href = response.href
-    fetch (href)
-    .then(x => console.log(x))
-    .then(y => document.getElementById("demo").innerHTML = y);
-    
+filledLike = () =>{
+  const likeUrl = document.querySelector("#filledlike");
+  fetch (likeUrl.href, {
+    method: "GET",
+    headers: {
+      "X-Requested-With": "XMLHttpRequest"
+    },
+  })
+  .then((response) => response.json())
+
+  .then((jsonResponse) => {
+    console.log(jsonResponse.likes)
+  })
+  .catch(error =>{
+    console.log('error')
+    console.error(error);
+  })
+  
 }
 
 
-const emptyLike = () => {
-    const response = document.getElementById("emptylike")
-    const href = response.href
-    fetch (href)
-    .then(x => console.log(x))
-    .then(y => document.getElementById("demo").innerHTML = y);
-}
+// emptyLike = () =>{
+//   fetch ('/submit-form', {
+//     method: "GET",
+//     ...
+//     headers: {
+//       "X-Requested-With": "XMLHttpRequest"
+//     },
+//     ...
+//   });
+// }
+

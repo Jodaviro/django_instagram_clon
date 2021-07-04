@@ -13,8 +13,10 @@ posts/migrations
 users/migrations
 .gitignore
 todos.txt
-/data/db/**
-**/migrations
+data/db/**
+!data/db/.gitkeep
+**/migrations/*
+!**/migrations/.gitkeep
 testingrequirements.txt
 chromedriver
 instagram/settings.py

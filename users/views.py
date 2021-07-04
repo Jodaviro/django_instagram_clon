@@ -53,6 +53,10 @@ def follow_or_unfollow(request, profile, instruction):
     another_profile = get_object_or_404(Profile, pk=profile)
 
     if instruction == "add":
+        """
+        follows another_profile is instruccion == 'add' 
+        otherwhise unfollows
+        """
         Contact.follow(current_profile,another_profile)
     else:
         Contact.unfollow(current_profile,another_profile)

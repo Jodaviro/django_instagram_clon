@@ -9,6 +9,7 @@ from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
+from django.http import JsonResponse
 
 #forms
 from posts.forms import PostForm, CommentForm
@@ -21,9 +22,6 @@ from posts.models import Post, Comment
 @login_required
 def like_or_dislike_post(request, post, instruction):
     """Like or dislike Posts"""
-    import json; post_data = json.loads(request.body)
-    print(post_data)
-    import pdb; pdb.set_trace()
     current_user= request.user
     post = get_object_or_404(Post, pk=post)
 
@@ -32,10 +30,15 @@ def like_or_dislike_post(request, post, instruction):
     else:
         post.likes.remove(current_user)
 
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    count = post.likes.count()
+
+
+    
+    
+    return JsonResponse({'likes': count})
+    
+    # return HttpResponseRedirect(request.META['HTTP_REFERER'])
     # return HttpResponse ('<script>history.back();</script>')
-
-
 
 
 class PostUpdateView(UpdateView, LoginRequiredMixin):
