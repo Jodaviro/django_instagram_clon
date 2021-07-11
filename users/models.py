@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Profile(models.Model):
-    """Profile models.
-    Proxy models that extends the base data with other information
+    """
+    Profile is an User class Proxy.
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     website = models.URLField(null=True, blank=True)
@@ -24,3 +24,31 @@ class Profile(models.Model):
     def __str__(self):
         return f' @{self.user.username}'
 
+
+
+class Contact(models.Model):
+    """
+    Following and followers system.
+    followers acces will be trough the profile model.
+    eg: 'profile.followers.count' will return Contact objects
+    """
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    following= models.ManyToManyField(Profile, related_name='followers', blank=True)
+
+
+    @classmethod
+    def follow(cls, profile, another_profile):
+        object = cls.objects.get(profile=profile)
+        object.following.add(another_profile)
+
+    @classmethod
+    def unfollow(cls, profile, another_profile):
+        object = cls.objects.get(profile=profile)
+        object.following.remove(another_profile)
+
+    def following_count(self):
+        return self.following.count()
+    
+    
+    def __str__(self):
+        return f'profile: {self.profile}, Following : {self.following.all()}'
