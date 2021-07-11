@@ -13,3 +13,4 @@ chromedriver
 data/db/**
 testingrequirements.txt
 todos.txt
+**/__pycache__
