@@ -18,8 +18,8 @@ class Post(admin.ModelAdmin):
 
 
 @admin.register(Comment)
-class Comment(admin.ModelAdmin)
+class Comment(admin.ModelAdmin):
     """Comment Admin"""
     list_display =('post', 'text', 'profile')
-    list_editable = ('text')
+    list_editable = ('text',)
     readonly_fields = ('created', 'modified',)
