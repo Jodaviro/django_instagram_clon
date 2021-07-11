@@ -8,6 +8,7 @@ filledLike = (url) =>{
       node.dataset.href = url.slice(0, -4) + 'like/'  
       node.setAttribute('onclick', `emptyLike('${node.dataset.href}')`)
       node.firstElementChild.className = 'far fa-heart' 
+      const likesDisplay = document.getElementById(node.dataset.href)
       
       window.fetch(url, {
         method: "GET",
@@ -18,12 +19,10 @@ filledLike = (url) =>{
       .then((response) => response.json())
       .then((jsonResponse) => {
         const likesCount = jsonResponse.likes
-        const likesDisplay = document.getElementById(node.dataset.href)
-  
         if(likesCount > 0){
           likesDisplay.firstElementChild.innerText = likesCount + ' Likes'
         }else{
-          likesDisplay.firstElementChild.innerText = NONE
+          likesDisplay.firstElementChild.innerText = ''
         }
       })
       .catch(error =>{
@@ -44,6 +43,7 @@ emptyLike = (url) =>{
       node.setAttribute('onclick', `filledLike('${node.dataset.href}')`)
       node.firstElementChild.className = 'fas fa-heart'
       node.firstElementChild.id = 'liked'
+      const likesDisplay = document.getElementById(url)
 
       window.fetch(url, {
         method: "GET",
@@ -54,7 +54,6 @@ emptyLike = (url) =>{
       .then((response) => response.json())
       .then((jsonResponse) => { 
         const likesCount = jsonResponse.likes
-        const likesDisplay = document.getElementById(url)
         if(likesCount > 0){
           likesDisplay.firstElementChild.innerText = likesCount + ' Likes'
         }
