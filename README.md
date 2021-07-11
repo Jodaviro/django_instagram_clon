@@ -1,7 +1,7 @@
 # [instagram_clon](https://instagram-clon-jodaviro.herokuapp.com/)
 
 
-This is a beta version of an instagram clon I've made using Django, Bootstrap and Postgresql.
+This is a beta version of an instagram clone I've made using Django, Bootstrap and Postgresql.
 
 Some features like edit comments, like on comments still mising. They will be implemented soon. 
 
