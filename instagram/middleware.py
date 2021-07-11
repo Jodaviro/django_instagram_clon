@@ -12,7 +12,7 @@ class ProfileUpdateMiddleware:
     def __call__(self, request):
         # Code t≠o be executed for each request before
         # the view (and later middleware) are called.
-        if not request.user.is_anonymous:
+        if not request.user.is_anonymous and not request.user.is_superuser:
             profile = request.user.profile
 
             if not profile.picture and not  profile.biography :

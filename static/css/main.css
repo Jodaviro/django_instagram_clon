@@ -33,14 +33,49 @@ html, body {
 .nav-icon a:hover {
     color: #1d5e72;;
 }
+
 #profile-box {
     background: #fff;
     border: 1px solid rgba(0,0,0,.0975);
     border-radius: 1px;
     margin-top: 6em;
+    
 }
 
 #user-posts #post-thumb {
     background: #fff;
 }
 
+.fa-heart{
+    font-size: 1.3em;
+    color: Tomato;
+}
+
+.fa-heart:hover{
+    font-size: 2em;
+    color: Tomato;
+}
+
+.fa-heart{
+    font-size: 1.3em;
+    color: Tomato
+}
+
+.fa-comment{
+    font-size: 1.3rem; 
+    color: Gray;
+}
+
+.fa-comment:hover{
+    font-size: 2rem; 
+    color: Gray;
+}
+
+
+.comment{
+    top: 39px;
+}
+
+a{
+    text-decoration: none;
+}

@@ -1,0 +1,97 @@
+
+#main-navbar {
+    background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.0975);
+    height: 8rem;
+    margin-bottom: 3rem;
+}
+
+.h-100 {
+    height: 60vh;
+    height: 50%;
+}
+
+#auth-container {
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 1px;
+    width: 70vw;
+    height: 80vw;
+}
+
+.nav-logo{
+    height: 5rem;
+}
+
+.media img, h5, p{
+    height: 5rem;
+    font-size: 3rem;
+}
+
+.info p, h6{
+    font-size: 3rem;
+}
+
+.nav-item a {
+    color: #262626;
+    font-size: 1.3em;
+    display: block;
+    margin-top: .2em;
+    margin-left: 1.2em;
+    font-weight: 100;
+    font-size: 3rem;
+}
+.nav-icon a:hover {
+    color: #1d5e72;;
+}
+#profile-box {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.0975);
+    border-radius: 1px;
+    margin-top: 6em;
+    width: 50rem;
+}
+
+#user-posts #post-thumb {
+    background: #fff;
+}
+
+.fa-heart{
+    font-size: 4rem;
+
+}
+
+.fa-heart:hover{
+    font-size: 6rem;
+}
+
+
+.fa-comment{
+    font-size: 4rem; 
+
+}
+
+.fa-comment:hover{
+    font-size: 6rem; 
+
+}
+
+.nav-item > img{
+    height: 4rem;
+}
+
+.form-group input{
+    font-size: 2rem;
+}
+
+.fw-lighter > p, a{
+    font-size: 1.5rem;
+}
+
+.text{
+    font-size: 3rem;
+}
+
+.comment{ 
+    top: 6rem;
+}

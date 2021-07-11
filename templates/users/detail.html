@@ -1,82 +1,100 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head_content %}
-    <title> @{{ user.username }}</title>
+<title> @{{ users.username }}</title>
 {% endblock %}
 
 {% block container %}
 
 {# style tag need to be fixed and placed to it's proper file #}
 <div class="container mb-5" style="margin-top: 8em;">
-        <div class="row">
-            <!--profile picture username    -->
-            <div class="col-sm-4 d-flex justify-content-center">
-                {% if user.profile.picture %}
-                <img
-                    src="{{ user.profile.picture.url }}"
-                    alt="@{{ user.username}}"
-                    class="rounded-circle"
-                    width="150px"
-                />
-                {% else %}
-                <img
-                    src="{% static 'img/default-profile.png' %}"
-                    alt="@{{ user.username}}"
-                    class="rounded-circle"
-                    width="150px"
-                />
-                {% endif %}
-            </div>
+	<div class="row">
+		<!--profile picture username    -->
+		<div class="col-sm-4 d-flex justify-content-center	">
+			{% if users.profile.picture %}
+			<img src="{{ users.profile.picture.url }}" alt="@{{ user.username}}" class="rounded-circle" width="150px" />
+			{% else %}
+			<img src="{% static 'img/default-profile.png' %}" alt="@{{ user.username}}" class="rounded-circle"
+				width="150px" />
+			{% endif %}
+		</div>
 
-            <div class="col-sm-8 ">
-<!--            Big profile name and edit or follow botton-->
-                <h2 style="font-weight: 100;">
-                    {{ user.username }}
-                    {% if user == request.user %}
-                        <a href="{% url 'users:update_profile' %}" class="ml-5 btn btn-sm btn-outline-dark">
-                            Edit profile
-                        </a>
-                    {% else %}
-                        <a href="" class="ml-5 btn btn-sm btn-primary">
-                            Follow
-                        </a>
-                    {% endif %}
-                </h2>
+		<!--            Big profile name, edit or follow botton-->
+		<div class="col-sm-8 ">
+			<h2>
+				{{ users.username }}
+				{% if users == request.user %}
+				<a href="{% url 'users:update_profile' %}" class="ml-5 btn btn-sm btn-outline-dark">
+					Edit profile
+				</a>
+				{% else %}
+				{% if users.profile not in user.profile.contact.following.all %}
+				<a href="{% url 'users:followorunfollow' profile=users.profile.pk instruction='add'%}"
+					class="ml-5 btn btn-sm btn-primary">
+					Follow
+				</a>
+				{% else %}
+				<a href="{% url 'users:followorunfollow' profile=users.profile.pk instruction='rm'%}"
+					class="ml-5 btn btn-sm btn-danger">
+					Unfollow
+				</a>
+				{% endif %}
+				{% endif %}
+			</h2>
+			<div class="row mt-2" style="font-size: 1.2em"> {#style tag to relocatte#}
+				<!--    posts count-->
 
-                <div class="row mt-2" style="font-size: 1.2em">
-<!--                Fake user followers, following, and posts-->
-                    <div class="col-sm-4">
-                        <b>{{ user.profile.posts_count }}785</b> posts
-                    </div>
-                    <div class="col-sm-4">
-                        <b>{{ user.profile.followers }}1,401</b> followers
-                    </div>
-                    <div class="col-sm-4">
-                        <b>{{ user.profile.following }}491</b> following
-                    </div>
-                </div>
-                <div     class="row mt-4">
-                    <div class="col-sm-12">
-                        <p>{{ user.profile.biography }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+				<div class="col-sm-4">
+					<b>{{ posts.count }}</b> Posts
+				</div>
 
-    <hr>
+				<!--   	following count-->
+				<div class="col-sm-4">
 
-    <div class="container" id="user-posts">
-        <div class="row mt-3">
-<!--        List username posts-->
-            {% for post in posts %}
-            <div class="col-sm-4 pt-5 pb-5 pr-5 pl-5 d-flex justify-content-center align-items-center">
-                <a href="{% url 'posts:detail' pk=post.pk %}" class="border">
-                    <img src="{{ post.photo.url }}" alt="{{ post.title }}" class="img-fluid"/>
-                </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-  {% endblock %}
+					{% if users.profile.contact.following.count %}
+					<a href="{% url 'users:following' username=users.username%}">
+						<b>{{ users.profile.contact.following.count }}</b>
+					</a>
+					Following
 
+					{% else %}
+					<b> 0 </b> Following
+					{% endif %}
+				</div>
+				<!--                followers count -->
+				<div class="col-sm-4">
+					{% if users.profile.followers.count %}
+					<a href="{% url 'users:followers' username=users.username %}">
+						<b>{{ users.profile.followers.count }}</b>
+					</a>
+					Followers
+
+					{% else %}
+					<b> 0 </b> Followers
+					{% endif %}
+				</div>
+			</div>
+			<div class="row mt-4">
+				<div class="col-">
+					<p>{{ user.profile.biography }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<hr>
+
+
+<div class="container" id="user-posts">
+	<div class="row mt-3">
+		<!--        List username posts-->
+		{% for post in posts %}
+		<div class="col-sm-4 pt-5 pb-5 d-flex justify-content-center align-items-center">
+			<a href="{% url 'posts:detail' pk=post.pk %}" class="border">
+				<img src="{{ post.photo.url }}" alt="{{ post.title }}" class="img-fluid" />
+			</a>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 
 #models
 from django.contrib.auth.models import User
-from users.models import Profile
+from users.models import Profile, Contact
 
 #Profile
 class ProfileForm(forms.ModelForm):
@@ -44,6 +44,8 @@ class ProfileForm(forms.ModelForm):
 
         if not picture and not biography:
             raise ValidationError('You must provide a profile picture or a biography text to proceeed.')
+
+
 
 
 #Signup
@@ -112,5 +114,12 @@ class SignUpForm (forms.Form):
         #Also creates a Profile
         profile = Profile(user=user)
         profile.save()
+
+        # And also creates contact system
+        contact = Contact(profile=profile)
+        contact.save()
+
+
+
 
 
