@@ -56,8 +56,6 @@ html, body {
     color: Tomato;
 }
 
-
-
 .fa-heart{
     font-size: 1.3em;
     color: Tomato
@@ -73,9 +71,6 @@ html, body {
     color: Gray;
 }
 
-#profilepic{
-    object-fit: contain;
-}
 
 .comment{
     top: 39px;
