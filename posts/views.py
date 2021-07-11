@@ -32,9 +32,6 @@ def like_or_dislike_post(request, post, instruction):
 
     count = post.likes.count()
 
-
-    
-    
     return JsonResponse({'likes': count})
     
     # return HttpResponseRedirect(request.META['HTTP_REFERER'])

@@ -12,7 +12,7 @@
 		
 		<a href="{% url 'users:detail' username=post.profile.user.username %}">
 			<img 
-				height="35" class="mr-3 rounded-circle" src="{{ post.profile.picture.url }}"
+				loading="lazy" height="35" class="mr-3 rounded-circle profilepic" data-src="{{ post.profile.picture.url }}"
 				alt="{{ post.user.get_full_name }}"
 			>
 		</a>
@@ -22,7 +22,7 @@
 		<a href="{% url 'users:detail' username=post.profile.user.username %}">
 			<img 
 				height="35" class="mr-3 rounded-circle" src="{% static 'img/default-profile.png' %}"
-				alt="{{ post.user.get_full_name }}" id="profilepic"
+				alt="{{ post.user.get_full_name }}"
 			>
 		</a>
 
@@ -38,25 +38,30 @@
 	{% if request.path == '/' %}
 	<a href="{% url 'posts:detail' pk=post.pk %}">
 		{% endif %}
-		<img class="img-fluid mt-3 border rounded" src="{{ post.photo.url }}" alt="{{ post.title }}" id="profilepic">
+		<img loading="lazy" class="img-fluid mt-3 border rounded post" data-src="{{ post.photo.url }}" alt="{{ post.title }}">
 	</a>
 
 	<!-- Like and comment icon -->
 	<div class="row">
-
-
 		{% if request.user in post.likes.all %}
+			<!-- like button -->
 			<div class="col-1">
 				<a 
-					href="{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}"
-					id="filledlike" onclick="filledLike()" type="submit">
+					data-href="{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}"
+					onclick="filledLike('{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}')" 
+					type="button"
+					class="filledlike" >
+					
 					<i class="fas fa-heart" id="liked"></i>
 				</a>
 			</div>
 		{% else %}
+			<!-- unlike button -->
 			<div class="col-1">
 				<a 
-					href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}" id="emptyli"onclick="emptyLike()" type="submit">
+					data-href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}" onclick="emptyLike('{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}')" 
+					type="button"
+					class="emptylike" >
 
 					<i class="far fa-heart"></i>
 				</a>
@@ -70,11 +75,12 @@
 		</div>
 	</div>
 
-	<div class="info">
-		{% if post.likes.count > 0 %}
-			<p>{{post.likes.count}} Likes</p>
-		{% endif %}
-
+	<div id="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}">
+		<p>
+			{% if post.likes.count > 0 %}
+				{{post.likes.count}} Likes
+			{% endif %}
+		</p>
 		{% if post.title %}
 			<h6 class="ml-1 mt-1">{{ post.title }}</h6>
 		{% else %}

@@ -52,34 +52,28 @@
     </a>
   
     <!-- Like and comment icon -->
-    <div>
-
-
+    <div class="row">
         {% if request.user in post.likes.all %}
-            <a href="{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}">
-                <i class="fas fa-heart" id="liked" ></i>
-            </a>
-
+            <!-- like button -->
+            <div class="col-1">
+                <a 
+                    data-href="{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}"
+                    onclick="filledLike('{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}')" type="button"
+                    class="filledlike" >
+                    
+                    <i class="fas fa-heart" id="liked"></i>
+                </a>
+            </div>
         {% else %}
-            <a href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}">
-                <i class="far fa-heart"></i>
-            </a>
-        {% endif %}
-    
-        <a href="{% url 'posts:create_comment' pk=post.pk %}">
-            <i class="far fa-comment"></i>
-        </a>
+            <!-- unlike button -->
+            <div class="col-1">
+                <a 
+                    data-href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}" onclick="emptyLike('{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}')" type="button"
+                    class="emptylike" >
 
-    </div>
-
-    <div class="info">
-        {% if post.likes.count > 0 %}
-            <p> {{post.likes.count}} Likes</p>
-        {% endif %}
-        {% if post.title %}
-            <h6 class="ml-1 mt-1">{{ post.title }}</h6>
-        {% else %}
-            <p></p>
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
         {% endif %}
 
         <p class="fw-lighter fst-italic small mt-2"> 
@@ -110,7 +104,6 @@
             {% include 'posts/post_confirm_delete.html' %}
             {% endif %}
             
-
 </div>
 
 {% endblock %}
