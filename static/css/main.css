@@ -79,3 +79,7 @@ html, body {
 a{
     text-decoration: none;
 }
+
+#postpic{
+    cursor: pointer;
+}

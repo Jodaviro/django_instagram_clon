@@ -1,5 +1,6 @@
 {% load static %}
 {% load humanize %}
+
 <div class="col-lg-4 offset-lg-4 ">
 	<!--profile user picture-->
 	<div class="media mt-4"
@@ -35,11 +36,9 @@
 
 	<!--   Post picture-->
 
-	{% if request.path == '/' %}
-	<a href="{% url 'posts:detail' pk=post.pk %}">
-		{% endif %}
-		<img loading="lazy" class="img-fluid mt-3 border rounded post" data-src="{{ post.photo.url }}" alt="{{ post.title }}">
-	</a>
+	<span id="postpic">
+		<img class="img-fluid mt-3 border rounded post" data-src="{{ post.photo.url }}" alt="{{ post.title }}">
+	</span>
 
 	<!-- Like and comment icon -->
 	<div class="row">
@@ -48,7 +47,7 @@
 			<div class="col-1">
 				<a 
 					data-href="{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}"
-					onclick="filledLike('{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}')" 
+					onclick="filledLike('{% url 'posts:likeordislikepost' post=post.pk instruction='rmv'%}', '{{ post.pk }}')" 
 					type="button"
 					class="filledlike" >
 					
@@ -59,7 +58,7 @@
 			<!-- unlike button -->
 			<div class="col-1">
 				<a 
-					data-href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}" onclick="emptyLike('{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}')" 
+					data-href="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}" onclick="emptyLike('{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}', '{{ post.pk }}')" 
 					type="button"
 					class="emptylike" >
 
@@ -75,14 +74,31 @@
 		</div>
 	</div>
 
-	<div id="{% url 'posts:likeordislikepost' post=post.pk instruction='like'%}">
-		<p>
-			{% if post.likes.count > 0 %}
-				{{post.likes.count}} Likes
-			{% endif %}
-		</p>
+	<div>
+		<div class="row">
+			<div id="{{ post.pk }}" class="col-4">	
+				{% if post.likes.count > 0 %}
+					<p class="fw-light">
+						{{post.likes.count}} Likes
+					</p>
+				{% endif %}
+			</div>	
+			
+			<div class="col-6 offset-2 ">
+				{% if post.comments_count > 0 %}
+					<p class="fw-light">		
+						{{ post.comments_count }} Comments
+					</p>
+				{% endif %}
+			</div>
+
+		</div>
+		
+		
 		{% if post.title %}
+		<div class="row mt-5 mt-lg-0">
 			<h6 class="ml-1 mt-1">{{ post.title }}</h6>
+		</div>
 		{% else %}
 			<p></p>
 		{% endif %}

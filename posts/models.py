@@ -4,7 +4,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from users.models import Profile
-
+from django import template
 # Create your models here.
 
 
@@ -18,6 +18,9 @@ class Post(models.Model):
     modified = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(User, blank=True, related_name='likes')
 
+    
+    def comments_count(self):
+        return Comment.objects.filter(post=self.pk).count()
 
     def likes_count(self):
         return self.likes.count()

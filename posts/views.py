@@ -34,9 +34,6 @@ def like_or_dislike_post(request, post, instruction):
 
     return JsonResponse({'likes': count})
     
-    # return HttpResponseRedirect(request.META['HTTP_REFERER'])
-    # return HttpResponse ('<script>history.back();</script>')
-
 
 class PostUpdateView(UpdateView, LoginRequiredMixin):
     """Single post view"""
@@ -79,8 +76,6 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'posts/new.html'
-   
-
     
     def form_valid(self, form):
         """creates a form instance
