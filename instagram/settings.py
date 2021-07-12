@@ -6,9 +6,8 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import django_heroku
+# import django_heroku
 from pathlib import Path
-import dj_database_url
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -164,7 +163,7 @@ CLOUDINARY_URL = config('CLOUDINARY_URL')
 DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Activate Django-Heroku.heroku logs --tail
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 
 if config('DJANGO_PRODUCTION', default=False, cast=bool):
