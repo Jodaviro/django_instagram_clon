@@ -6,7 +6,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-# import django_heroku
+import django_heroku
 from pathlib import Path
 from decouple import config
 
@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='wjjz&-o!$a@tb3nk6px20^ez-y#1$+w_#y4+je)hs-ur&o08cu')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com']
 
@@ -163,7 +163,7 @@ CLOUDINARY_URL = config('CLOUDINARY_URL')
 DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Activate Django-Heroku.heroku logs --tail
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
 
 
 if config('DJANGO_PRODUCTION', default=False, cast=bool):
