@@ -15,6 +15,7 @@ async function onclickFetch(url, postId){
     		break;
     	
     	case 1:
+    		likesDisplay.removeChild(likesDisplay.firstElementChild)
     		const text = document.createElement('p')
     		text.className = 'fw-light'
     		text.innerText = likesCount + ' Likes'

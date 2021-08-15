@@ -57,6 +57,7 @@ admin.site.register(User, UserAdmin)
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
+    """Contact Admin """
     list_display = ('profile',)
     list_display_links = ('profile',)
 

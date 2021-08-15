@@ -90,7 +90,7 @@
 		<!--        List username posts-->
 		{% for post in posts %}
 		<div class="col-sm-4 pt-5 pb-5 d-flex justify-content-center align-items-center">
-			<a href="{% url 'posts:detail' pk=post.pk %}" class="border">
+			<a href="{% url 'posts:create_comment' pk=post.pk %}" class="border">
 				<img src="{{ post.photo.url }}" alt="{{ post.title }}" class="img-fluid" />
 			</a>
 		</div>
